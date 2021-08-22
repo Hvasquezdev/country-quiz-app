@@ -6,6 +6,7 @@ import { Region } from '@/core/domain/models/Region';
 import { Regions } from '@/core/domain/models/Regions';
 import { SubRegion } from '@/core/domain/models/SubRegion';
 import { getParsedStringName, getRandomIndexes } from '@/core/utils';
+import { Answer } from '../domain/models/Answer';
 
 const getParsedCountryData = (country: ApiCountry): Country => {
   return {
@@ -77,10 +78,27 @@ const getRandomCountries = (countries: Countries, quantity: number) => {
   return indexes.map((country) => countries[country.id]);
 };
 
+const getAnswersWithCountryNameAsLabel = (
+  countries: Country[],
+  correctCountryId: string
+) => {
+  return countries.map((country): Answer => {
+    const answer: Answer = {
+      label: country.name,
+      isCorrect: false,
+    };
+
+    if (country.id === correctCountryId) answer.isCorrect = true;
+
+    return answer;
+  });
+};
+
 export {
   getParsedCountryData,
   getParsedSubRegionData,
   getParsedRegionData,
   getParsedData,
   getRandomCountries,
+  getAnswersWithCountryNameAsLabel,
 };
