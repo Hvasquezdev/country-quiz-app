@@ -16,6 +16,16 @@ const getRandomCountry = (countries: Countries): Country => {
   return randomCountry;
 };
 
+const getRandomCountryWithBorders = (countries: Countries): Country => {
+  const countriesWithBorder = Object.values(countries).filter(
+    (country) => country.borders.length > 0
+  );
+  const randomKey = Math.floor(Math.random() * countriesWithBorder.length);
+  const randomCountry = countries[countriesWithBorder[randomKey].id];
+
+  return randomCountry;
+};
+
 const getParsedCountryData = (country: ApiCountry): Country => {
   return {
     borders: country.borders,
@@ -113,4 +123,5 @@ export {
   getRandomCountries,
   getAnswersWithCountryNameAsLabel,
   getRandomCountry,
+  getRandomCountryWithBorders,
 };

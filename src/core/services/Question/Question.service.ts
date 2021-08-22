@@ -9,7 +9,7 @@ import QuestionTypeFlagCountry from './QuestionTypeFlagCountry.service';
 import QuestionTypeCountryCapital from './QuestionTypeCountryCapital.service';
 import QuestionTypeCountryFrontier from './QuestionTypeCountryFrontier.service';
 import QuestionTypeCountryRegion from './QuestionTypeCountryRegion.service';
-import QuestionTypeSubregionRegion from './QuestionTypeCountrySubregionRegion.service';
+import QuestionTypeSubregionRegion from './QuestionTypeSubregionRegion.service';
 
 export default class LocalQuestionService implements QuestionService {
   private getQuestionInstance = (
