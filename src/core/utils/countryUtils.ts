@@ -10,7 +10,7 @@ import { Answer } from '../domain/models/Answer';
 
 const getRandomCountry = (countries: Countries): Country => {
   const countriesKey = Object.keys(countries);
-  const randomKey = Math.round(Math.random() * countriesKey.length);
+  const randomKey = Math.floor(Math.random() * countriesKey.length);
   const randomCountry = countries[countriesKey[randomKey]];
 
   return randomCountry;
