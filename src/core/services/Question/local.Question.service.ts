@@ -1,4 +1,5 @@
 import { QuestionType } from '@/core/domain/models/QuestionType';
+import { CountriesData } from '@/core/domain/models/CountriesData';
 import { QuestionService } from '@/core/domain/services/Question.service';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
 
@@ -27,7 +28,7 @@ export default class LocalQuestionService implements QuestionService {
     }
   };
 
-  public getQuestionByType = (questionType: QuestionType) => {
-    return this.getQuestionInstance(questionType).getQuestion();
+  public getQuestionByType = (questionType: QuestionType, countriesData: CountriesData) => {
+    return this.getQuestionInstance(questionType).getQuestion(countriesData);
   };
 }

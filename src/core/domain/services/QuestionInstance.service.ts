@@ -1,7 +1,8 @@
+import { CountriesData } from '../models/CountriesData';
 import { Question } from '../models/Question';
 
 interface QuestionInstance {
-  getQuestion(): Question;
+  getQuestion(countriesData: CountriesData): Question;
 }
 
 export { QuestionInstance };
