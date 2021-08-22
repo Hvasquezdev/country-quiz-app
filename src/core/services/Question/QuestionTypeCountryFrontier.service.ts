@@ -54,12 +54,6 @@ export default class QuestionTypeCountryFrontier implements QuestionInstance {
       Math.random() * correctCountry.borders.length
     );
 
-    console.log(
-      correctCountry.borders[randomBorderId],
-      randomBorderId,
-      correctCountry.borders
-    );
-
     const correctAnswer: Answer = {
       label: countries[correctCountry.borders[randomBorderId]].name,
       isCorrect: true,
