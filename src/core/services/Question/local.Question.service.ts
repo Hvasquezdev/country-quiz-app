@@ -3,13 +3,17 @@ import { CountriesData } from '@/core/domain/models/CountriesData';
 import { QuestionService } from '@/core/domain/services/Question.service';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
 
+// Question type classes
+import WhichCountryDoesThisFlagBelongTo from './WhichCountryDoesThisFlagBelongTo.service';
+import LocalQuestionTypeCountryCapital from './local.QuestionTypeCountryCapital.service';
+
 export default class LocalQuestionService implements QuestionService {
   private getQuestionInstance = (
     questionType: QuestionType
   ): QuestionInstance => {
     switch (questionType) {
       case 'flag-country':
-        return {} as QuestionInstance;
+        return new WhichCountryDoesThisFlagBelongTo() as QuestionInstance;
 
       case 'subregion-region':
         return {} as QuestionInstance;
@@ -18,7 +22,7 @@ export default class LocalQuestionService implements QuestionService {
         return {} as QuestionInstance;
 
       case 'country-capital':
-        return {} as QuestionInstance;
+        return new LocalQuestionTypeCountryCapital() as QuestionInstance;
 
       case 'country-frontier':
         return {} as QuestionInstance;
