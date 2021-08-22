@@ -60,10 +60,10 @@ export default class QuestionTypeCountryCapital implements QuestionInstance {
     const answers = this.getAnswers(countriesData.countries, mainCountry);
 
     return {
-      label: `${questionTypeLabel} ${mainCountry.name}?`,
-      image: '',
-      type: this._questionType,
       answers,
+      image: '',
+      label: `${questionTypeLabel} ${mainCountry.name}?`,
+      type: this._questionType,
     };
   };
 }

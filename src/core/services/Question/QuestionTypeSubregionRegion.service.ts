@@ -83,10 +83,10 @@ export default class QuestionTypeSubregionRegion implements QuestionInstance {
     const answers = this.getAnswers(countriesData.regions, mainRegion);
 
     return {
-      label: `${mainSubregions.name} ${questionTypeLabel}`,
-      image: '',
-      type: this._questionType,
       answers,
+      image: '',
+      label: `${mainSubregions.name} ${questionTypeLabel}`,
+      type: this._questionType,
     };
   };
 }

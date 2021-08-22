@@ -72,10 +72,10 @@ export default class QuestionTypeCountryRegion implements QuestionInstance {
     const answers = this.getAnswers(countriesData.regions, mainCountry);
 
     return {
-      label: `${mainCountry.name} ${questionTypeLabel}`,
-      image: '',
-      type: this._questionType,
       answers,
+      image: '',
+      label: `${mainCountry.name} ${questionTypeLabel}`,
+      type: this._questionType,
     };
   };
 }
