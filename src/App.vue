@@ -1,7 +1,11 @@
 <template>
   <div class="app">
     <div class="game-wrapper">
-      <h2 class="game-wrapper__title">Country quiz</h2>
+      <h1 class="game-wrapper__title">Country quiz</h1>
+
+      <div class="game-wrapper__card">
+        <h2>Lorem ipsum dolor sit amet.</h2>
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +49,12 @@ export default defineComponent({
       margin-bottom: 10px;
       text-transform: uppercase;
       color: #fff;
+    }
+
+    &__card {
+      padding: 32px;
+      border-radius: $border-radius;
+      background-color: $white;
     }
   }
 }
