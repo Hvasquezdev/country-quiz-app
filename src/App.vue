@@ -2,21 +2,15 @@
   <div class="app">
     <div class="game-wrapper">
       <h2 class="game-wrapper__title">Country quiz</h2>
-      <base-game-button></base-game-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import BaseGameButton from '@/components/BaseGameButton.vue';
 
 export default defineComponent({
   name: 'App',
-
-  components: {
-    BaseGameButton,
-  },
 
   setup() {
     return {};
