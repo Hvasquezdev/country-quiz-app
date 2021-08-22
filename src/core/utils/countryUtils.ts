@@ -70,9 +70,11 @@ const getCountriesLength = (countries: Countries) => {
 };
 
 const getRandomCountries = (countries: Countries, quantity: number) => {
-  const indexes = getRandomIndexes(quantity, getCountriesLength(countries));
+  const indexes = getRandomIndexes(quantity, getCountriesLength(countries)).map(
+    (randomIndex) => Object.values(countries)[randomIndex]
+  );
 
-  return indexes.map((randomIndex) => countries[randomIndex]);
+  return indexes.map((country) => countries[country.id]);
 };
 
 export {
