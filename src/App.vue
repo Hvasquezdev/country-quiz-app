@@ -18,6 +18,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '@/assets/scss/variables.scss';
 .app {
   width: 100%;
   height: 100%;
