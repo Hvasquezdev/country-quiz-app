@@ -1,27 +1,50 @@
 <template>
-  <img alt="Vue logo" src="./assets/img/png/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <div class="app">
+    <div class="game-wrapper">
+      <h2 class="game-wrapper__title">Country quiz</h2>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld,
+  setup() {
+    return {};
   },
 });
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+.app {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  background-image: url('@/assets/img/png/background.png');
+  background-size: cover;
+  background-position: center;
+  font-family: Poppins;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .game-wrapper {
+    width: 100%;
+    max-width: 468px;
+
+    &__title {
+      font-size: 36px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 54px;
+      letter-spacing: 0em;
+      text-align: left;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+  }
 }
 </style>
