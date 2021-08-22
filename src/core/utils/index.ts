@@ -29,4 +29,31 @@ const getRandomIndexes = (quantity: number, limit: number): number[] => {
   return Object.values(indexes);
 };
 
-export { getFirstLetterUpperCase, getParsedStringName, getRandomIndexes };
+const suffleArrayOfObjects = (arr: Array<any>): Array<any> => {
+  const stringifyList = arr.map((el: any) => JSON.stringify(el));
+  const shuffledArr = shuffleArray(stringifyList);
+
+  return shuffledArr.map((el: string) => JSON.parse(el));
+};
+
+const shuffleArray = (arr: Array<any>): Array<any> => {
+  const arrToShuffle = Array.from(arr);
+
+  for (let i = arrToShuffle.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    if (j !== i) {
+      [arrToShuffle[i], arrToShuffle[j]] = [arrToShuffle[j], arrToShuffle[i]];
+    }
+  }
+
+  return arrToShuffle;
+};
+
+export {
+  getFirstLetterUpperCase,
+  getParsedStringName,
+  shuffleArray,
+  suffleArrayOfObjects,
+  getRandomIndexes,
+};
