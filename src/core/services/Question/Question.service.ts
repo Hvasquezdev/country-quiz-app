@@ -6,6 +6,8 @@ import { QuestionInstance } from '@/core/domain/services/QuestionInstance.servic
 // Question type classes
 import QuestionTypeFlagCountry from './QuestionTypeFlagCountry.service';
 import QuestionTypeCountryCapital from './QuestionTypeCountryCapital.service';
+import QuestionTypeCountryFrontier from './QuestionTypeCountryFrontier.service';
+import QuestionTypeCountryRegion from './QuestionTypeCountryRegion.service';
 
 export default class LocalQuestionService implements QuestionService {
   private getQuestionInstance = (
@@ -19,13 +21,13 @@ export default class LocalQuestionService implements QuestionService {
         return {} as QuestionInstance;
 
       case 'country-region':
-        return {} as QuestionInstance;
+        return new QuestionTypeCountryRegion();
 
       case 'country-capital':
         return new QuestionTypeCountryCapital();
 
       case 'country-frontier':
-        return {} as QuestionInstance;
+        return new QuestionTypeCountryFrontier();
 
       default:
         return {} as QuestionInstance;
