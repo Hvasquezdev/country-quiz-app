@@ -18,14 +18,5 @@ module.exports = {
   rules: {
     // override/add rules settings here, such as:
     'vue/no-unused-vars': 'error',
-    '@typescript-eslint/ban-types': [
-      'error',
-      {
-        types: {
-          object: null,
-          Object: null,
-        },
-      },
-    ],
   },
 };

@@ -1,7 +1,6 @@
 import { questionLabels } from '@/core/constants/questionLabels';
 import { Answer } from '@/core/domain/models/Answer';
 import { CountriesData } from '@/core/domain/models/CountriesData';
-import { Country } from '@/core/domain/models/Country';
 import { Question } from '@/core/domain/models/Question';
 import { QuestionType } from '@/core/domain/models/QuestionType';
 import { Region } from '@/core/domain/models/Region';
@@ -24,7 +23,9 @@ export default class QuestionTypeSubregionRegion implements QuestionInstance {
 
   private getRandomSubregion = (subregions: SubRegions): SubRegion => {
     const subregionsKey = Object.keys(subregions);
-    const randomSubregionIndex = Math.floor(Math.random() * subregionsKey.length);
+    const randomSubregionIndex = Math.floor(
+      Math.random() * subregionsKey.length
+    );
     const subregionKey = subregionsKey[randomSubregionIndex];
 
     return subregions[subregionKey];
