@@ -3,6 +3,7 @@ import { Answer } from '@/core/domain/models/Answer';
 import { Countries } from '@/core/domain/models/Countries';
 import { CountriesData } from '@/core/domain/models/CountriesData';
 import { Country } from '@/core/domain/models/Country';
+import { Question } from '@/core/domain/models/Question';
 import { QuestionType } from '@/core/domain/models/QuestionType';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
 import { suffleArrayOfObjects } from '@/core/utils';
@@ -53,7 +54,7 @@ export default class QuestionTypeCountryCapital implements QuestionInstance {
     return answers as Array<Answer>;
   };
 
-  public getQuestion = (countriesData: CountriesData) => {
+  public getQuestion = (countriesData: CountriesData): Question => {
     const mainCountry = getRandomCountry(countriesData.countries);
     const questionTypeLabel = questionLabels[this._questionType];
     const answers = this.getAnswers(countriesData.countries, mainCountry);

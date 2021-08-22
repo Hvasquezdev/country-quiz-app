@@ -1,4 +1,6 @@
-const getFirstLetterUpperCase = (word: string) => {
+import { GenericObject } from '../domain/models/GenericObject';
+
+const getFirstLetterUpperCase = (word: string): string => {
   return `${word.charAt(0).toUpperCase()}${word.slice(1)}`;
 };
 
@@ -29,14 +31,16 @@ const getRandomIndexes = (quantity: number, limit: number): number[] => {
   return Object.values(indexes);
 };
 
-const suffleArrayOfObjects = (arr: Array<any>): Array<any> => {
-  const stringifyList = arr.map((el: any) => JSON.stringify(el));
-  const shuffledArr = shuffleArray(stringifyList);
+const suffleArrayOfObjects = (
+  arr: Array<GenericObject>
+): Array<GenericObject> => {
+  const stringifyList = arr.map((el: GenericObject) => JSON.stringify(el));
+  const shuffledArr = shuffleArray(stringifyList) as Array<string>;
 
   return shuffledArr.map((el: string) => JSON.parse(el));
 };
 
-const shuffleArray = (arr: Array<any>): Array<any> => {
+const shuffleArray = (arr: Array<string | number>): Array<string | number> => {
   const arrToShuffle = Array.from(arr);
 
   for (let i = arrToShuffle.length - 1; i > 0; i--) {

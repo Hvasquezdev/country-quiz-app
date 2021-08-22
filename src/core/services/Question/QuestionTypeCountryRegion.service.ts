@@ -2,6 +2,7 @@ import { questionLabels } from '@/core/constants/questionLabels';
 import { Answer } from '@/core/domain/models/Answer';
 import { CountriesData } from '@/core/domain/models/CountriesData';
 import { Country } from '@/core/domain/models/Country';
+import { Question } from '@/core/domain/models/Question';
 import { QuestionType } from '@/core/domain/models/QuestionType';
 import { Region } from '@/core/domain/models/Region';
 import { Regions } from '@/core/domain/models/Regions';
@@ -56,13 +57,16 @@ export default class QuestionTypeCountryRegion implements QuestionInstance {
     mainCountry: Country
   ): Array<Answer> => {
     const correctAnswer = this.getCorrectAnswer(mainCountry);
-    const wrongAnswers = this.getRandomWrongAnswers(regions, getParsedStringName(mainCountry.region));
+    const wrongAnswers = this.getRandomWrongAnswers(
+      regions,
+      getParsedStringName(mainCountry.region)
+    );
     const answers = suffleArrayOfObjects([correctAnswer, ...wrongAnswers]);
 
     return answers as Array<Answer>;
   };
 
-  public getQuestion = (countriesData: CountriesData) => {
+  public getQuestion = (countriesData: CountriesData): Question => {
     const mainCountry = getRandomCountry(countriesData.countries);
     const questionTypeLabel = questionLabels[this._questionType];
     const answers = this.getAnswers(countriesData.regions, mainCountry);

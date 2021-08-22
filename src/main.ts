@@ -19,7 +19,7 @@ const test = async () => {
   const r3 = PRUEBA3.getQuestion(data);
   const r4 = PRUEBA4.getQuestion(data);
   const r5 = PRUEBA5.getQuestion(data);
-  
+
   console.log(data);
   console.log(r2);
   console.log(r3);

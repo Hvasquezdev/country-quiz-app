@@ -74,11 +74,14 @@ const getParsedData = (countryList: Array<ApiCountry>): CountriesData => {
   };
 };
 
-const getCountriesLength = (countries: Countries) => {
+const getCountriesLength = (countries: Countries): number => {
   return Object.keys(countries).length;
 };
 
-const getRandomCountries = (countries: Countries, quantity: number) => {
+const getRandomCountries = (
+  countries: Countries,
+  quantity: number
+): Array<Country> => {
   const indexes = getRandomIndexes(quantity, getCountriesLength(countries)).map(
     (randomIndex) => Object.values(countries)[randomIndex]
   );
@@ -89,7 +92,7 @@ const getRandomCountries = (countries: Countries, quantity: number) => {
 const getAnswersWithCountryNameAsLabel = (
   countries: Country[],
   correctCountryId: string
-) => {
+): Array<Answer> => {
   return countries.map((country): Answer => {
     const answer: Answer = {
       label: country.name,
@@ -109,5 +112,5 @@ export {
   getParsedData,
   getRandomCountries,
   getAnswersWithCountryNameAsLabel,
-  getRandomCountry
+  getRandomCountry,
 };

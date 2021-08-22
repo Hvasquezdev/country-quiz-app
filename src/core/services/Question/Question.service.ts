@@ -8,6 +8,7 @@ import QuestionTypeFlagCountry from './QuestionTypeFlagCountry.service';
 import QuestionTypeCountryCapital from './QuestionTypeCountryCapital.service';
 import QuestionTypeCountryFrontier from './QuestionTypeCountryFrontier.service';
 import QuestionTypeCountryRegion from './QuestionTypeCountryRegion.service';
+import { Question } from '@/core/domain/models/Question';
 
 export default class LocalQuestionService implements QuestionService {
   private getQuestionInstance = (
@@ -37,7 +38,7 @@ export default class LocalQuestionService implements QuestionService {
   public getQuestionByType = (
     questionType: QuestionType,
     countriesData: CountriesData
-  ) => {
+  ): Question => {
     return this.getQuestionInstance(questionType).getQuestion(countriesData);
   };
 }

@@ -3,15 +3,12 @@ import { questionsCount } from '@/core/constants/questionsCount';
 import { Answer } from '@/core/domain/models/Answer';
 import { Countries } from '@/core/domain/models/Countries';
 import { CountriesData } from '@/core/domain/models/CountriesData';
+import { GenericObject } from '@/core/domain/models/GenericObject';
 import { Question } from '@/core/domain/models/Question';
 import { QuestionType } from '@/core/domain/models/QuestionType';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
-import { getRandomIndexes, suffleArrayOfObjects } from '@/core/utils';
-import {
-  getAnswersWithCountryNameAsLabel,
-  getRandomCountries,
-  getRandomCountry,
-} from '@/core/utils/countryUtils';
+import { suffleArrayOfObjects } from '@/core/utils';
+import { getRandomCountry } from '@/core/utils/countryUtils';
 
 export default class QuestionTypeCountryFrontier implements QuestionInstance {
   private _questionType: QuestionType = 'country-frontier';
@@ -66,7 +63,10 @@ export default class QuestionTypeCountryFrontier implements QuestionInstance {
     );
 
     return {
-      answers: suffleArrayOfObjects([correctAnswer, ...wrongAnswers]),
+      answers: suffleArrayOfObjects([
+        correctAnswer,
+        ...wrongAnswers,
+      ] as Array<GenericObject>) as Array<Answer>,
       image: '',
       label: `${correctCountry.name} ${questionLabels[this._questionType]}`,
       type: this._questionType as QuestionType,

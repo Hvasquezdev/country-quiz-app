@@ -1,4 +1,3 @@
-import { Answer } from '@/core/domain/models/Answer';
 import { CountriesData } from '@/core/domain/models/CountriesData';
 import { Question } from '@/core/domain/models/Question';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
@@ -10,6 +9,8 @@ import {
   getRandomCountries,
 } from '@/core/utils/countryUtils';
 import { suffleArrayOfObjects } from '@/core/utils';
+import { Answer } from '@/core/domain/models/Answer';
+import { GenericObject } from '@/core/domain/models/GenericObject';
 
 export default class QuestionTypeFlagCountry implements QuestionInstance {
   private _questionType: QuestionType = 'flag-country';
@@ -27,7 +28,9 @@ export default class QuestionTypeFlagCountry implements QuestionInstance {
     );
 
     return {
-      answers: suffleArrayOfObjects(answers),
+      answers: suffleArrayOfObjects(
+        answers as Array<GenericObject>
+      ) as Array<Answer>,
       image: correctCountry.flag,
       label: questionLabels[this._questionType],
       type: this._questionType as QuestionType,
