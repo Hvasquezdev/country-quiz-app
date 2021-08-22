@@ -15,4 +15,18 @@ const getParsedStringName = (name: string): string => {
   return parsedName.join('');
 };
 
-export { getFirstLetterUpperCase, getParsedStringName };
+const getRandomIndexes = (quantity: number, limit: number): number[] => {
+  const indexes: { [key: number]: number } = {};
+
+  while (Object.keys(indexes).length < quantity) {
+    const randomNumber = Math.floor(Math.random() * limit);
+
+    if (!(randomNumber in indexes)) {
+      indexes[randomNumber] = randomNumber;
+    }
+  }
+
+  return Object.values(indexes);
+};
+
+export { getFirstLetterUpperCase, getParsedStringName, getRandomIndexes };
