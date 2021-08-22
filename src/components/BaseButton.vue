@@ -52,7 +52,8 @@ export default defineComponent({
   font-size: $fs-s;
   font-weight: $fw-medium;
   outline: none;
-  padding: $button-padding;
+  padding: 5px 36px;
+  min-height: 56px;
 
   &--is-dark-blue {
     color: $white;

@@ -4,20 +4,49 @@
       <h1 class="game-wrapper__title">Country quiz</h1>
 
       <div class="game-wrapper__card">
-        <h2>Lorem ipsum dolor sit amet.</h2>
+        <game-board
+          :question="question"
+          :is-loading="loadingData || creatingQuestion"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, watch } from 'vue';
+import { countriesDataManager } from '@/features/countriesDataManager';
+import { questionManager } from '@/features/questionManager';
+import GameBoard from '@/components/GameBoard.vue';
 
 export default defineComponent({
   name: 'App',
 
+  components: {
+    GameBoard,
+  },
+
   setup() {
-    return {};
+    const { loadingData, countriesData, getCountriesData } =
+      countriesDataManager();
+    const { creatingQuestion, question, initQuestionGeneration } =
+      questionManager();
+
+    onMounted(() => {
+      getCountriesData();
+    });
+
+    watch(loadingData, (val) => {
+      if (!val && countriesData.value) {
+        initQuestionGeneration('country-region', countriesData.value);
+      }
+    });
+
+    return {
+      creatingQuestion,
+      question,
+      loadingData,
+    };
   },
 });
 </script>

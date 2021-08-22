@@ -1,5 +1,10 @@
 <template>
-  <button class="base-game-button" :class="statusClass" @click="onClick">
+  <button
+    class="base-game-button"
+    v-bind="$attrs"
+    :class="statusClass"
+    @click="onClick"
+  >
     <div class="base-game-button__content">
       <div class="base-game-button__content__option">{{ option }}</div>
       <div v-if="answer" class="base-game-button__content__label">
@@ -51,9 +56,9 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    status: {
-      type: String as () => 'selected' | 'success' | 'error' | 'normal',
-      default: 'normal',
+    isSelected: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -66,7 +71,23 @@ export default defineComponent({
       }
     };
 
-    const statusClass = computed(() => `is-${props.status}`);
+    const statusClass = computed(() => {
+      if (props.showResults) {
+        if (props.answer.isCorrect) {
+          return 'is-success';
+        }
+
+        if (!props.answer.isCorrect && props.isSelected) {
+          return 'is-error';
+        }
+      }
+
+      if (!props.showResults && props.isSelected) {
+        return 'is-selected';
+      }
+
+      return 'is-normal';
+    });
 
     return { onClick, statusClass };
   },

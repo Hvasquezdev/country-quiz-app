@@ -10,7 +10,7 @@
     />
 
     <img
-      v-if="question && question.image"
+      v-if="question && question.image && !isLoading"
       :src="question.image"
       :alt="question.label"
       class="game-board__question-image"
@@ -19,29 +19,39 @@
       load="lazy"
     />
 
-    <h2 class="game-board__title">
+    <h2 v-if="!isLoading && question" class="game-board__title">
       {{ question.label }}
     </h2>
 
-    <div v-if="question.answers.length" class="game-board__answers">
+    <div
+      v-if="question && question.answers.length && !isLoading"
+      class="game-board__answers"
+    >
       <base-game-button
         v-for="(answer, key) in question.answers"
         :key="key"
         :option="optionLabels[key]"
         :answer="answer"
+        :is-selected="selectedOption === optionLabels[key]"
+        @select-answer="selectAnswer(optionLabels[key], answer)"
       />
     </div>
+
+    <base-button label="Next" color="yellow" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { Question } from '@/core/domain/models/Question';
+import { Answer } from '@/core/domain/models/Answer';
 import BaseGameButton from '@/components/BaseGameButton.vue';
+import BaseButton from '@/components/BaseButton.vue';
 
 export default defineComponent({
   components: {
     BaseGameButton,
+    BaseButton,
   },
 
   props: {
@@ -49,13 +59,35 @@ export default defineComponent({
       type: Object as () => Question,
       default: {} as Question,
     },
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
   },
 
-  setup() {
-    const optionLabels = ref(['A', 'B', 'C', 'D']);
+  emits: ['select-option'],
+
+  setup(props, { emit }) {
+    const optionLabels = ref(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']);
+    const selectedOption = ref('');
+    const selectedAnswer = ref(null as Answer | null);
+
+    const selectAnswer = (option: string, answer: Answer) => {
+      if (option === selectedOption.value) {
+        selectedOption.value = '';
+        selectedAnswer.value = null;
+      } else {
+        selectedOption.value = option;
+        selectedAnswer.value = answer;
+      }
+
+      emit('select-option', selectedAnswer.value);
+    };
 
     return {
       optionLabels,
+      selectAnswer,
+      selectedOption,
     };
   },
 });
@@ -93,6 +125,12 @@ export default defineComponent({
     display: grid;
     grid-template-columns: 1fr;
     row-gap: 25px;
+  }
+
+  .base-button {
+    margin-top: 24px;
+    margin-left: auto;
+    display: block;
   }
 }
 </style>
