@@ -11,6 +11,7 @@ export default defineComponent({
   props: {
     color: {
       type: String,
+      default: '',
     },
 
     outlined: {
@@ -19,6 +20,7 @@ export default defineComponent({
 
     label: {
       type: String,
+      default: '',
     },
   },
 

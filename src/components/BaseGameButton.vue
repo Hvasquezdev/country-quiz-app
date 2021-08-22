@@ -78,7 +78,7 @@ export default defineComponent({
   width: 100%;
   border-radius: $button-border-radius;
   background-color: transparent;
-  padding: 0px 19px;
+  padding: 5px 19px;
   font-family: $ff-popins;
   color: $purple;
   border: 2px solid $purple-light;
@@ -118,14 +118,15 @@ export default defineComponent({
     column-gap: 20px;
 
     &__option {
-      font-size: 24px;
+      font-size: $fs-m;
+      line-height: $fs-m;
       font-weight: $fw-medium;
       text-align: left;
     }
 
     &__label {
       padding-left: 26px;
-      font-size: 18px;
+      font-size: $fs-s;
       font-weight: $fw-medium;
       text-align: left;
     }
