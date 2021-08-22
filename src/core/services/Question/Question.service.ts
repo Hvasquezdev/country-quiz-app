@@ -2,13 +2,14 @@ import { QuestionType } from '@/core/domain/models/QuestionType';
 import { CountriesData } from '@/core/domain/models/CountriesData';
 import { QuestionService } from '@/core/domain/services/Question.service';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
+import { Question } from '@/core/domain/models/Question';
 
 // Question type classes
 import QuestionTypeFlagCountry from './QuestionTypeFlagCountry.service';
 import QuestionTypeCountryCapital from './QuestionTypeCountryCapital.service';
 import QuestionTypeCountryFrontier from './QuestionTypeCountryFrontier.service';
 import QuestionTypeCountryRegion from './QuestionTypeCountryRegion.service';
-import { Question } from '@/core/domain/models/Question';
+import QuestionTypeSubregionRegion from './QuestionTypeCountrySubregionRegion.service';
 
 export default class LocalQuestionService implements QuestionService {
   private getQuestionInstance = (
@@ -19,7 +20,7 @@ export default class LocalQuestionService implements QuestionService {
         return new QuestionTypeFlagCountry();
 
       case 'subregion-region':
-        return {} as QuestionInstance;
+        return new QuestionTypeSubregionRegion();
 
       case 'country-region':
         return new QuestionTypeCountryRegion();
