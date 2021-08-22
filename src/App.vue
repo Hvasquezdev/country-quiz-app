@@ -2,15 +2,22 @@
   <div class="app">
     <div class="game-wrapper">
       <h2 class="game-wrapper__title">Country quiz</h2>
+      <base-game-button></base-game-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import BaseGameButton from '@/components/BaseGameButton.vue';
 
 export default defineComponent({
   name: 'App',
+
+  components: {
+    BaseGameButton,
+  },
+
   setup() {
     return {};
   },
@@ -25,7 +32,7 @@ export default defineComponent({
   background-image: url('@/assets/img/png/background.png');
   background-size: cover;
   background-position: center;
-  font-family: Poppins;
+  font-family: $ff-popins;
   display: flex;
   align-items: center;
   justify-content: center;
