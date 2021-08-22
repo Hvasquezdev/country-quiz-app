@@ -124,17 +124,17 @@ export default defineComponent({
 
   &--is-yellow {
     color: $white;
-    background-color: $yellow;
+    background-color: $orange;
 
     &:hover {
-      background-color: darken($color: $yellow, $amount: 10%);
+      background-color: darken($color: $orange, $amount: 10%);
     }
 
     &-outlined {
-      color: $yellow;
+      color: $orange;
 
       &:hover {
-        background-color: rgba($color: $yellow, $alpha: 0.1);
+        background-color: rgba($color: $orange, $alpha: 0.1);
       }
     }
   }
