@@ -8,7 +8,10 @@ import { Question } from '@/core/domain/models/Question';
 import { QuestionType } from '@/core/domain/models/QuestionType';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
 import { suffleArrayOfObjects } from '@/core/utils';
-import { getRandomCountry } from '@/core/utils/countryUtils';
+import {
+  getRandomCountry,
+  getRandomCountryWithBorders,
+} from '@/core/utils/countryUtils';
 
 export default class QuestionTypeCountryFrontier implements QuestionInstance {
   private _questionType: QuestionType = 'country-frontier';
@@ -45,10 +48,16 @@ export default class QuestionTypeCountryFrontier implements QuestionInstance {
   public getQuestion = (countriesData: CountriesData): Question => {
     const { countries } = countriesData;
 
-    const correctCountry = getRandomCountry(countries);
+    const correctCountry = getRandomCountryWithBorders(countries);
 
     const randomBorderId = Math.floor(
       Math.random() * correctCountry.borders.length
+    );
+
+    console.log(
+      correctCountry.borders[randomBorderId],
+      randomBorderId,
+      correctCountry.borders
     );
 
     const correctAnswer: Answer = {
