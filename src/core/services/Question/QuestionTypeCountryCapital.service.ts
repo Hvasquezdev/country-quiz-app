@@ -7,9 +7,7 @@ import { QuestionType } from '@/core/domain/models/QuestionType';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
 import { suffleArrayOfObjects } from '@/core/utils';
 
-export default class LocalQuestionTypeCountryCapital
-  implements QuestionInstance
-{
+export default class QuestionTypeCountryCapital implements QuestionInstance {
   private _questionType: QuestionType = 'country-capital';
 
   private getRandomCountry = (countries: Countries): Country => {
@@ -51,7 +49,10 @@ export default class LocalQuestionTypeCountryCapital
     return wrongAnswers;
   };
 
-  private getAnswers = (countries: Countries, mainCountry: Country): Array<Answer> => {
+  private getAnswers = (
+    countries: Countries,
+    mainCountry: Country
+  ): Array<Answer> => {
     const correctAnswer = this.getCorrectAnswer(mainCountry);
     const wrongAnswers = this.getRandomWrongAnswers(countries, mainCountry.id);
     const answers = suffleArrayOfObjects([correctAnswer, ...wrongAnswers]);
@@ -62,13 +63,13 @@ export default class LocalQuestionTypeCountryCapital
   public getQuestion = (countriesData: CountriesData) => {
     const mainCountry = this.getRandomCountry(countriesData.countries);
     const questionTypeLabel = questionLabels[this._questionType];
-    const answers = this.getAnswers(countriesData.countries, mainCountry)
+    const answers = this.getAnswers(countriesData.countries, mainCountry);
 
     return {
       label: `${mainCountry.name} ${questionTypeLabel}`,
       image: '',
       type: this._questionType,
-      answers
+      answers,
     };
   };
 }

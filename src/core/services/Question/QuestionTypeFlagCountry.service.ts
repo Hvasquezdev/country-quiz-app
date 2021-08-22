@@ -8,9 +8,7 @@ import { QuestionType } from '@/core/domain/models/QuestionType';
 import { getRandomCountries } from '@/core/utils/countryUtils';
 import { suffleArrayOfObjects } from '@/core/utils';
 
-export default class WhichCountryDoesThisFlagBelongTo
-  implements QuestionInstance
-{
+export default class QuestionTypeFlagCountry implements QuestionInstance {
   public getQuestion = (countriesData: CountriesData): Question => {
     const { countries } = countriesData;
 
