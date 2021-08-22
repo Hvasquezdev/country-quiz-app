@@ -8,6 +8,14 @@ import { SubRegion } from '@/core/domain/models/SubRegion';
 import { getParsedStringName, getRandomIndexes } from '@/core/utils';
 import { Answer } from '../domain/models/Answer';
 
+const getRandomCountry = (countries: Countries): Country => {
+  const countriesKey = Object.keys(countries);
+  const randomKey = Math.round(Math.random() * countriesKey.length);
+  const randomCountry = countries[countriesKey[randomKey]];
+
+  return randomCountry;
+};
+
 const getParsedCountryData = (country: ApiCountry): Country => {
   return {
     borders: country.borders,
@@ -101,4 +109,5 @@ export {
   getParsedData,
   getRandomCountries,
   getAnswersWithCountryNameAsLabel,
+  getRandomCountry
 };

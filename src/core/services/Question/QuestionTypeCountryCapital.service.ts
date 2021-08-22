@@ -6,17 +6,10 @@ import { Country } from '@/core/domain/models/Country';
 import { QuestionType } from '@/core/domain/models/QuestionType';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
 import { suffleArrayOfObjects } from '@/core/utils';
+import { getRandomCountry } from '@/core/utils/countryUtils';
 
 export default class QuestionTypeCountryCapital implements QuestionInstance {
   private _questionType: QuestionType = 'country-capital';
-
-  private getRandomCountry = (countries: Countries): Country => {
-    const countriesKey = Object.keys(countries);
-    const randomKey = Math.round(Math.random() * countriesKey.length);
-    const randomCountry = countries[countriesKey[randomKey]];
-
-    return randomCountry;
-  };
 
   private getCorrectAnswer = (country: Country): Answer => {
     return {
@@ -36,7 +29,7 @@ export default class QuestionTypeCountryCapital implements QuestionInstance {
     delete countryList[mainCountry];
 
     for (let i = 0; i < 3; i++) {
-      const randomCountry = this.getRandomCountry(countryList);
+      const randomCountry = getRandomCountry(countryList);
 
       wrongAnswers.push({
         label: randomCountry.name,
@@ -61,7 +54,7 @@ export default class QuestionTypeCountryCapital implements QuestionInstance {
   };
 
   public getQuestion = (countriesData: CountriesData) => {
-    const mainCountry = this.getRandomCountry(countriesData.countries);
+    const mainCountry = getRandomCountry(countriesData.countries);
     const questionTypeLabel = questionLabels[this._questionType];
     const answers = this.getAnswers(countriesData.countries, mainCountry);
 
