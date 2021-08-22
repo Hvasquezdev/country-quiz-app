@@ -32,7 +32,7 @@ export default class QuestionTypeCountryCapital implements QuestionInstance {
       const randomCountry = getRandomCountry(countryList);
 
       wrongAnswers.push({
-        label: randomCountry.name,
+        label: randomCountry.capital,
         isCorrect: false,
       });
 
