@@ -3,7 +3,7 @@ const questionLabels = {
   'country-capital': 'Which of these is capital of',
   'country-region': 'belongs to which region?',
   'subregion-region': 'is a subregion that belongs to which region?',
-  'country-frontier': 'is the frontier of?',
+  'country-frontier': 'borders with?',
 };
 
 export { questionLabels };
