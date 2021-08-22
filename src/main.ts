@@ -6,7 +6,7 @@ import QuestionTypeCountryCapital from './core/services/Question/QuestionTypeCou
 import QuestionTypeFlagCountry from './core/services/Question/QuestionTypeFlagCountry.service';
 import QuestionTypeCountryRegion from './core/services/Question/QuestionTypeCountryRegion.service';
 import QuestionTypeCountryFrontier from './core/services/Question/QuestionTypeCountryFrontier.service';
-import QuestionTypeSubregionRegion from './core/services/Question/QuestionTypeCountrySubregionRegion.service';
+import QuestionTypeSubregionRegion from './core/services/Question/QuestionTypeSubregionRegion.service';
 
 const PRUEBA = new ApiCountriesDataService();
 const PRUEBA2 = new QuestionTypeCountryCapital();

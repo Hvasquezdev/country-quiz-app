@@ -14,7 +14,7 @@ export default class QuestionTypeCountryCapital implements QuestionInstance {
 
   private getCorrectAnswer = (country: Country): Answer => {
     return {
-      label: country.capital,
+      label: country.capital || country.name,
       isCorrect: true,
     };
   };
@@ -60,7 +60,7 @@ export default class QuestionTypeCountryCapital implements QuestionInstance {
     const answers = this.getAnswers(countriesData.countries, mainCountry);
 
     return {
-      label: `${mainCountry.name} ${questionTypeLabel}`,
+      label: `${questionTypeLabel} ${mainCountry.name}?`,
       image: '',
       type: this._questionType,
       answers,
