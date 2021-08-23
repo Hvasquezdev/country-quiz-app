@@ -6,6 +6,10 @@
       <base-button color="dark-blue" outlined>10 questions</base-button>
       <base-button color="dark-blue" outlined>20 questions</base-button>
       <base-button color="dark-blue" outlined>40 questions</base-button>
+
+      <base-button class="back-btn" color="negative" @click="$emit('on-back')">
+        BACK
+      </base-button>
     </div>
   </div>
 </template>
@@ -13,8 +17,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import BaseButton from './BaseButton.vue';
+import { ViewsEnum } from '@/core/constants/views';
 
 export default defineComponent({
+  name: ViewsEnum.ChooseGameTarget,
   components: { BaseButton },
 });
 </script>
@@ -46,6 +52,10 @@ export default defineComponent({
 
     .base-button:not(:last-child) {
       margin-bottom: 32px;
+    }
+
+    .back-btn {
+      margin-top: 36px;
     }
   }
 }

@@ -64,8 +64,11 @@ import { defineComponent, ref } from 'vue';
 import { Question } from '@/core/domain/models/Question';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseGameButton from '@/components/BaseGameButton.vue';
+import { ViewsEnum } from '@/core/constants/views';
 
 export default defineComponent({
+  name: ViewsEnum.GameBoard,
+
   components: {
     BaseGameButton,
     BaseButton,

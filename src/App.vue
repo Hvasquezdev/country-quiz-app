@@ -1,10 +1,26 @@
 <template>
   <div class="app">
     <div class="game-wrapper">
-      <h1 class="game-wrapper__title">Country quiz</h1>
+      <h1
+        v-if="currentView !== ViewsEnum.Presentation"
+        class="game-wrapper__title"
+      >
+        Country quiz
+      </h1>
 
       <div class="game-wrapper__card">
+        <presentation
+          v-if="currentView === ViewsEnum.Presentation"
+          @on-play="currentView = ViewsEnum.ChooseGameTarget"
+        />
+
+        <choose-game-target
+          v-if="currentView === ViewsEnum.ChooseGameTarget"
+          @on-back="currentView = ViewsEnum.Presentation"
+        />
+
         <game-board
+          v-if="currentView === ViewsEnum.GameBoard"
           :question="question"
           :is-loading="loadingData || creatingQuestion"
           @on-next="handleNextQuestion"
@@ -20,17 +36,24 @@ import { Answer } from './core/domain/models/Answer';
 import { countriesDataManager } from '@/features/countriesDataManager';
 import { defineComponent, onMounted, watch, ref } from 'vue';
 import { questionManager } from '@/features/questionManager';
+import { ViewsEnum, viewTypes } from './core/constants/views';
+import ChooseGameTarget from './components/ChooseGameTarget.vue';
 import GameBoard from '@/components/GameBoard.vue';
+import Presentation from './components/Presentation.vue';
 
 export default defineComponent({
   name: 'App',
 
   components: {
     GameBoard,
+    Presentation,
+    ChooseGameTarget,
   },
 
   setup() {
     const score = ref<number>(0);
+
+    const currentView = ref<viewTypes>(ViewsEnum.Presentation);
 
     const { loadingData, countriesData, getCountriesData } =
       countriesDataManager();
@@ -59,10 +82,12 @@ export default defineComponent({
 
     return {
       creatingQuestion,
-      question,
-      loadingData,
-      handleNextQuestion,
+      currentView,
       handleConfirmAnswer,
+      handleNextQuestion,
+      loadingData,
+      question,
+      ViewsEnum,
     };
   },
 });

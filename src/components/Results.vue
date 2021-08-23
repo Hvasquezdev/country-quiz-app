@@ -22,10 +22,12 @@
 </template>
 
 <script lang="ts">
+import { ViewsEnum } from '@/core/constants/views';
 import { defineComponent, computed } from 'vue';
 import BaseButton from './BaseButton.vue';
 
 export default defineComponent({
+  name: ViewsEnum.Results,
   components: { BaseButton },
 
   props: {
