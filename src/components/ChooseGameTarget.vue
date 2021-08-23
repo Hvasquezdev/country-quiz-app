@@ -3,10 +3,15 @@
     <h1 class="choose-game-target__title">Choose target</h1>
 
     <div class="choose-game-target__actions">
-      <base-button color="dark-blue" outlined>10 questions</base-button>
-      <base-button color="dark-blue" outlined>20 questions</base-button>
-      <base-button color="dark-blue" outlined>40 questions</base-button>
-
+      <base-button
+        v-for="val in targets"
+        :key="val"
+        color="dark-blue"
+        outlined
+        @click="onChooseTarget(val)"
+      >
+        {{ val }} questions
+      </base-button>
       <base-button class="back-btn" color="negative" @click="$emit('on-back')">
         BACK
       </base-button>
@@ -21,7 +26,23 @@ import { ViewsEnum } from '@/core/constants/views';
 
 export default defineComponent({
   name: ViewsEnum.ChooseGameTarget,
+
   components: { BaseButton },
+
+  emits: ['on-choose'],
+
+  setup(props, { emit }) {
+    const targets = [10, 20, 40];
+
+    const onChooseTarget = (target: number) => {
+      emit('on-choose', target);
+    };
+
+    return {
+      onChooseTarget,
+      targets,
+    };
+  },
 });
 </script>
 

@@ -16,14 +16,30 @@
     </div>
 
     <div class="results__actions">
-      <base-button outlined color="dark-blue">Try Again</base-button>
+      <base-button outlined color="dark-blue" @click="$emit('on-try-again')"
+        >Try Again</base-button
+      >
+
+      <div class="results__actions__btn-wrapper">
+        <base-button color="negative" @click="$emit('on-back')">
+          Back
+        </base-button>
+
+        <base-button
+          class="back-btn"
+          color="dark-blue"
+          @click="$emit('on-choose-target')"
+        >
+          Choose new target
+        </base-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { ViewsEnum } from '@/core/constants/views';
 import { defineComponent, computed } from 'vue';
+import { ViewsEnum } from '@/core/constants/views';
 import BaseButton from './BaseButton.vue';
 
 export default defineComponent({
@@ -36,6 +52,8 @@ export default defineComponent({
       required: true,
     },
   },
+
+  emits: ['on-try-again', 'on-back', 'on-choose-target'],
 
   setup(props, { emit }) {
     const classNames = computed(() => {
@@ -92,9 +110,23 @@ export default defineComponent({
   &__actions {
     width: 100%;
 
+    &__btn-wrapper {
+      display: flex;
+      width: 100%;
+      margin-top: 16px;
+
+      .base-button {
+        font-size: $fs-ss;
+        padding: 5px 16px;
+
+        &:last-child {
+          margin-left: 16px;
+        }
+      }
+    }
+
     .base-button {
       width: 100%;
-      max-width: 210px;
     }
   }
 }

@@ -17,6 +17,7 @@
         <choose-game-target
           v-if="currentView === ViewsEnum.ChooseGameTarget"
           @on-back="currentView = ViewsEnum.Presentation"
+          @on-choose="handleChooseTarget"
         />
 
         <game-board
@@ -25,6 +26,24 @@
           :is-loading="loadingData || creatingQuestion"
           @on-next="handleNextQuestion"
           @on-confirm="handleConfirmAnswer"
+        />
+
+        <results
+          v-if="currentView === ViewsEnum.Results"
+          :score="score"
+          @on-try-again="handleTryAgain"
+          @on-choose-target="
+            () => {
+              resetState();
+              currentView = ViewsEnum.ChooseGameTarget;
+            }
+          "
+          @on-back="
+            () => {
+              resetState();
+              currentView = ViewsEnum.Presentation;
+            }
+          "
         />
       </div>
     </div>
@@ -40,6 +59,7 @@ import { ViewsEnum, viewTypes } from './core/constants/views';
 import ChooseGameTarget from './components/ChooseGameTarget.vue';
 import GameBoard from '@/components/GameBoard.vue';
 import Presentation from './components/Presentation.vue';
+import Results from './components/Results.vue';
 
 export default defineComponent({
   name: 'App',
@@ -48,11 +68,13 @@ export default defineComponent({
     GameBoard,
     Presentation,
     ChooseGameTarget,
+    Results,
   },
 
   setup() {
     const score = ref<number>(0);
-
+    const target = ref<number>(0);
+    const questionsCount = ref<number>(0);
     const currentView = ref<viewTypes>(ViewsEnum.Presentation);
 
     const { loadingData, countriesData, getCountriesData } =
@@ -62,12 +84,34 @@ export default defineComponent({
       questionManager();
 
     const handleNextQuestion = () => {
+      if (questionsCount.value === target.value) {
+        currentView.value = ViewsEnum.Results;
+        return;
+      }
+
       initQuestionGeneration(countriesData.value);
+      questionsCount.value += 1;
     };
 
     const handleConfirmAnswer = (payload: Answer) => {
       if (payload.isCorrect) score.value += 1;
-      console.log('ANSWER IS:', payload.isCorrect, 'TOTAL SCORE:', score.value);
+    };
+
+    const handleChooseTarget = (val: number) => {
+      target.value = val;
+      currentView.value = ViewsEnum.GameBoard;
+    };
+
+    const resetState = () => {
+      score.value = 0;
+      questionsCount.value = 0;
+      target.value = 0;
+    };
+
+    const handleTryAgain = () => {
+      score.value = 0;
+      questionsCount.value = 0;
+      currentView.value = ViewsEnum.GameBoard;
     };
 
     onMounted(() => {
@@ -83,10 +127,14 @@ export default defineComponent({
     return {
       creatingQuestion,
       currentView,
+      handleChooseTarget,
       handleConfirmAnswer,
       handleNextQuestion,
+      handleTryAgain,
       loadingData,
       question,
+      resetState,
+      score,
       ViewsEnum,
     };
   },
