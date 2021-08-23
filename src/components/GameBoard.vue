@@ -166,7 +166,7 @@ export default defineComponent({
 
   &__answers {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
     row-gap: 25px;
   }
 

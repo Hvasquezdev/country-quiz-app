@@ -81,6 +81,8 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 360px;
+  padding: 32px;
 
   .game-wrapper {
     width: 100%;
