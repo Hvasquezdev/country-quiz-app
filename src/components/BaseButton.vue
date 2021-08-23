@@ -54,6 +54,11 @@ export default defineComponent({
   outline: none;
   padding: 5px 36px;
   min-height: 56px;
+  transition: all 0.25s;
+
+  &:active {
+    transform: scale(0.98);
+  }
 
   &--is-dark-blue {
     color: $white;
