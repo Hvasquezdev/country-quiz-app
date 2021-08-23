@@ -12,6 +12,7 @@
       >
         {{ val }} questions
       </base-button>
+
       <base-button class="back-btn" color="negative" @click="$emit('on-back')">
         BACK
       </base-button>
@@ -29,7 +30,7 @@ export default defineComponent({
 
   components: { BaseButton },
 
-  emits: ['on-choose'],
+  emits: ['on-choose', 'on-back'],
 
   setup(props, { emit }) {
     const targets = [10, 20, 40];
