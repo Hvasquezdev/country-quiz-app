@@ -33,8 +33,8 @@
         :option="optionLabels[key]"
         :answer="answer"
         :show-results="
-          (!isChoosing && selectedOption === optionLabels[key]) ||
-          (answer.isCorrect && !isChoosing)
+          (!needConfirm && selectedOption === optionLabels[key]) ||
+          (answer.isCorrect && !needConfirm)
         "
         :is-selected="selectedOption === optionLabels[key]"
         @select-answer="selectAnswer(optionLabels[key], answer)"
@@ -42,11 +42,11 @@
     </div>
 
     <base-button
-      v-if="isChoosing"
-      class="choose-button"
-      label="Choose"
+      v-if="needConfirm"
+      class="confirm-button"
+      label="Confirm"
       color="positive"
-      @click="handleChooseOption"
+      @click="handleConfirmOption"
     />
 
     <base-button
@@ -59,11 +59,11 @@
 </template>
 
 <script lang="ts">
+import { Answer } from '@/core/domain/models/Answer';
 import { defineComponent, ref } from 'vue';
 import { Question } from '@/core/domain/models/Question';
-import { Answer } from '@/core/domain/models/Answer';
-import BaseGameButton from '@/components/BaseGameButton.vue';
 import BaseButton from '@/components/BaseButton.vue';
+import BaseGameButton from '@/components/BaseGameButton.vue';
 
 export default defineComponent({
   components: {
@@ -83,26 +83,26 @@ export default defineComponent({
     },
   },
 
-  emits: ['select-option', 'on-choose', 'on-next'],
+  emits: ['select-option', 'on-confirm', 'on-next'],
 
   setup(props, { emit }) {
-    const isChoosing = ref<boolean>(true);
+    const needConfirm = ref<boolean>(true);
     const optionLabels = ref(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']);
     const selectedAnswer = ref<Answer | null>(null);
     const selectedOption = ref<null | string>(null);
 
-    const handleChooseOption = () => {
+    const handleConfirmOption = () => {
       if (!selectedAnswer.value) return alert('Please, select a option!');
 
       const { value: answer } = selectedAnswer;
 
-      isChoosing.value = false;
+      needConfirm.value = false;
 
-      emit('on-choose', answer);
+      emit('on-confirm', answer);
     };
 
     const selectAnswer = (option: string, answer: Answer) => {
-      if (!isChoosing.value) return;
+      if (!needConfirm.value) return;
 
       if (option === selectedOption.value) {
         selectedOption.value = null;
@@ -119,7 +119,7 @@ export default defineComponent({
       // Reset all local variables
       selectedAnswer.value = null;
       selectedOption.value = null;
-      isChoosing.value = true;
+      needConfirm.value = true;
 
       emit('on-next');
     };
@@ -128,8 +128,8 @@ export default defineComponent({
       optionLabels,
       selectAnswer,
       selectedOption,
-      handleChooseOption,
-      isChoosing,
+      handleConfirmOption,
+      needConfirm,
       handleNextQuestion,
     };
   },
@@ -176,7 +176,7 @@ export default defineComponent({
     display: block;
   }
 
-  .choose-button {
+  .confirm-button {
     width: 100%;
   }
 }

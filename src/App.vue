@@ -8,7 +8,7 @@
           :question="question"
           :is-loading="loadingData || creatingQuestion"
           @on-next="handleNextQuestion"
-          @on-choose="handleChooseOption"
+          @on-confirm="handleConfirmAnswer"
         />
       </div>
     </div>
@@ -19,7 +19,6 @@
 import { Answer } from './core/domain/models/Answer';
 import { countriesDataManager } from '@/features/countriesDataManager';
 import { defineComponent, onMounted, watch, ref } from 'vue';
-import { Question } from './core/domain/models/Question';
 import { questionManager } from '@/features/questionManager';
 import GameBoard from '@/components/GameBoard.vue';
 
@@ -43,7 +42,7 @@ export default defineComponent({
       initQuestionGeneration(countriesData.value);
     };
 
-    const handleChooseOption = (payload: Answer) => {
+    const handleConfirmAnswer = (payload: Answer) => {
       if (payload.isCorrect) score.value += 1;
       console.log('ANSWER IS:', payload.isCorrect, 'TOTAL SCORE:', score.value);
     };
@@ -63,7 +62,7 @@ export default defineComponent({
       question,
       loadingData,
       handleNextQuestion,
-      handleChooseOption,
+      handleConfirmAnswer,
     };
   },
 });
