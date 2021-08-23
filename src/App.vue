@@ -7,6 +7,8 @@
         <game-board
           :question="question"
           :is-loading="loadingData || creatingQuestion"
+          @on-next="handleNextQuestion"
+          @on-choose="handleChooseOption"
         />
       </div>
     </div>
@@ -14,8 +16,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, watch } from 'vue';
+import { Answer } from './core/domain/models/Answer';
 import { countriesDataManager } from '@/features/countriesDataManager';
+import { defineComponent, onMounted, watch, ref } from 'vue';
+import { Question } from './core/domain/models/Question';
 import { questionManager } from '@/features/questionManager';
 import GameBoard from '@/components/GameBoard.vue';
 
@@ -27,10 +31,22 @@ export default defineComponent({
   },
 
   setup() {
+    const score = ref<number>(0);
+
     const { loadingData, countriesData, getCountriesData } =
       countriesDataManager();
+
     const { creatingQuestion, question, initQuestionGeneration } =
       questionManager();
+
+    const handleNextQuestion = () => {
+      initQuestionGeneration(countriesData.value);
+    };
+
+    const handleChooseOption = (payload: Answer) => {
+      if (payload.isCorrect) score.value += 1;
+      console.log('ANSWER IS:', payload.isCorrect, 'TOTAL SCORE:', score.value);
+    };
 
     onMounted(() => {
       getCountriesData();
@@ -38,7 +54,7 @@ export default defineComponent({
 
     watch(loadingData, (val) => {
       if (!val && countriesData.value) {
-        initQuestionGeneration('country-region', countriesData.value);
+        initQuestionGeneration(countriesData.value);
       }
     });
 
@@ -46,6 +62,8 @@ export default defineComponent({
       creatingQuestion,
       question,
       loadingData,
+      handleNextQuestion,
+      handleChooseOption,
     };
   },
 });

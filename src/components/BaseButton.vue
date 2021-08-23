@@ -1,5 +1,5 @@
 <template>
-  <button :class="classNames" class="base-button" @click="emit('click')">
+  <button :class="classNames" class="base-button">
     <slot v-if="!Boolean(label)" /> {{ label }}
   </button>
 </template>
@@ -123,7 +123,7 @@ export default defineComponent({
     }
   }
 
-  &--is-yellow {
+  &--is-orange {
     color: $white;
     background-color: $orange;
 

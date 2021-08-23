@@ -32,12 +32,29 @@
         :key="key"
         :option="optionLabels[key]"
         :answer="answer"
+        :show-results="
+          (!isChoosing && selectedOption === optionLabels[key]) ||
+          (answer.isCorrect && !isChoosing)
+        "
         :is-selected="selectedOption === optionLabels[key]"
         @select-answer="selectAnswer(optionLabels[key], answer)"
       />
     </div>
 
-    <base-button label="Next" color="yellow" />
+    <base-button
+      v-if="isChoosing"
+      class="choose-button"
+      label="Choose"
+      color="positive"
+      @click="handleChooseOption"
+    />
+
+    <base-button
+      v-else
+      label="Next"
+      color="orange"
+      @click="handleNextQuestion"
+    />
   </div>
 </template>
 
@@ -59,22 +76,36 @@ export default defineComponent({
       type: Object as () => Question,
       default: {} as Question,
     },
+
     isLoading: {
       type: Boolean,
       default: false,
     },
   },
 
-  emits: ['select-option'],
+  emits: ['select-option', 'on-choose', 'on-next'],
 
   setup(props, { emit }) {
+    const isChoosing = ref<boolean>(true);
     const optionLabels = ref(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']);
-    const selectedOption = ref('');
-    const selectedAnswer = ref(null as Answer | null);
+    const selectedAnswer = ref<Answer | null>(null);
+    const selectedOption = ref<null | string>(null);
+
+    const handleChooseOption = () => {
+      if (!selectedAnswer.value) return alert('Please, select a option!');
+
+      const { value: answer } = selectedAnswer;
+
+      isChoosing.value = false;
+
+      emit('on-choose', answer);
+    };
 
     const selectAnswer = (option: string, answer: Answer) => {
+      if (!isChoosing.value) return;
+
       if (option === selectedOption.value) {
-        selectedOption.value = '';
+        selectedOption.value = null;
         selectedAnswer.value = null;
       } else {
         selectedOption.value = option;
@@ -84,10 +115,22 @@ export default defineComponent({
       emit('select-option', selectedAnswer.value);
     };
 
+    const handleNextQuestion = () => {
+      // Reset all local variables
+      selectedAnswer.value = null;
+      selectedOption.value = null;
+      isChoosing.value = true;
+
+      emit('on-next');
+    };
+
     return {
       optionLabels,
       selectAnswer,
       selectedOption,
+      handleChooseOption,
+      isChoosing,
+      handleNextQuestion,
     };
   },
 });
@@ -131,6 +174,10 @@ export default defineComponent({
     margin-top: 24px;
     margin-left: auto;
     display: block;
+  }
+
+  .choose-button {
+    width: 100%;
   }
 }
 </style>
