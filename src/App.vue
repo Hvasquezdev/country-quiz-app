@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <div class="game-wrapper">
+    <div v-if="!loadingData && countriesData" class="game-wrapper">
       <h1
         v-if="currentView !== ViewsEnum.Presentation"
         class="game-wrapper__title"
@@ -50,6 +50,7 @@
         />
       </div>
     </div>
+    <loading-game v-else />
   </div>
 </template>
 
@@ -58,13 +59,14 @@ import { Answer } from './core/domain/models/Answer';
 import { countriesDataManager } from '@/features/countriesDataManager';
 import { defineComponent, onMounted, watch, ref, computed } from 'vue';
 import { delay } from './core/utils';
+import { gameConfig } from '@/core/constants/gameConfig';
 import { questionManager } from '@/features/questionManager';
 import { ViewsEnum, viewTypes } from './core/constants/views';
 import ChooseGameTarget from './components/ChooseGameTarget.vue';
 import GameBoard from '@/components/GameBoard.vue';
+import LoadingGame from './components/LoadingGame.vue';
 import Presentation from './components/Presentation.vue';
 import Results from './components/Results.vue';
-import { gameConfig } from '@/core/constants/gameConfig';
 
 export default defineComponent({
   name: 'App',
@@ -74,6 +76,7 @@ export default defineComponent({
     Presentation,
     ChooseGameTarget,
     Results,
+    LoadingGame,
   },
 
   setup() {
@@ -159,6 +162,7 @@ export default defineComponent({
       loadingData,
       question,
       questionsCount,
+      countriesData,
       resetState,
       score,
       target,
