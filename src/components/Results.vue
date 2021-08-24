@@ -4,13 +4,13 @@
       <img src="@/assets/img/svg/undraw_winner.svg" alt="Winners" />
     </div>
 
-    <div class="results__score">
+    <div class="results__score animate__animated animate__bounce">
       <h1 class="results__score__title">Results</h1>
       <p class="results__score__text">
         You got
-        <span :class="classNames" class="results__score__text__count">{{
-          score
-        }}</span>
+        <span :class="classNames" class="results__score__text__count"
+          >{{ score }}
+        </span>
         correct answers
       </p>
     </div>
