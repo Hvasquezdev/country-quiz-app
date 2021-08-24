@@ -44,11 +44,11 @@
       <span class="game-board-lifes-count">
         <b>{{ lifesCount }}</b>
         <svg
+          class="animate__animated"
+          :class="heartIconClassNames"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
-          x="0px"
-          y="0px"
           width="24"
           height="24"
           viewBox="0 0 391.837 391.837"
@@ -88,12 +88,13 @@
 
 <script lang="ts">
 import { Answer } from '@/core/domain/models/Answer';
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { Question } from '@/core/domain/models/Question';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseGameButton from '@/components/BaseGameButton.vue';
 import { ViewsEnum } from '@/core/constants/views';
 import { gameConfig } from '@/core/constants/gameConfig';
+import { delay } from '@/core/utils';
 
 export default defineComponent({
   name: ViewsEnum.GameBoard,
@@ -137,6 +138,7 @@ export default defineComponent({
     const optionLabels = ref(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']);
     const selectedAnswer = ref<Answer | null>(null);
     const selectedOption = ref<null | string>(null);
+    const heartFadeOut = ref<boolean>(false);
 
     const handleConfirmOption = () => {
       if (!selectedAnswer.value) return alert('Please, select a option!');
@@ -146,6 +148,8 @@ export default defineComponent({
       needConfirm.value = false;
 
       emit('on-confirm', answer);
+
+      if (!answer.isCorrect) handleHeartFadeOut();
     };
 
     const selectAnswer = (option: string, answer: Answer) => {
@@ -171,6 +175,16 @@ export default defineComponent({
       emit('on-next');
     };
 
+    const handleHeartFadeOut = async () => {
+      heartFadeOut.value = true;
+      await delay(1000);
+      heartFadeOut.value = false;
+    };
+
+    const heartIconClassNames = computed(() => {
+      return { animate__fadeOutDown: heartFadeOut.value };
+    });
+
     return {
       optionLabels,
       selectAnswer,
@@ -178,6 +192,7 @@ export default defineComponent({
       handleConfirmOption,
       needConfirm,
       handleNextQuestion,
+      heartIconClassNames,
     };
   },
 });
