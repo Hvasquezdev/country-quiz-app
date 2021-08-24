@@ -12,11 +12,16 @@
       >
         {{ val }} questions
       </base-button>
-
-      <base-button class="back-btn" color="negative" @click="$emit('on-back')">
-        BACK
-      </base-button>
     </div>
+
+    <base-button
+      class="back-btn"
+      color="negative"
+      outlined
+      @click="$emit('on-back')"
+    >
+      BACK
+    </base-button>
   </div>
 </template>
 
@@ -49,36 +54,27 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .choose-game-target {
-  &,
-  &__actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
   &__title {
     color: $dark-blue;
     font-size: $fs-m;
     font-weight: $fw-bold;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
     text-align: center;
     text-transform: uppercase;
     width: 100%;
   }
 
   &__actions {
-    .base-button {
-      width: 100%;
-    }
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 25px;
+    margin-bottom: 24px;
+    width: 100%;
+  }
 
-    .base-button:not(:last-child) {
-      margin-bottom: 32px;
-    }
-
-    .back-btn {
-      margin-top: 36px;
-    }
+  .back-btn {
+    display: block;
+    margin-left: auto;
   }
 }
 </style>
