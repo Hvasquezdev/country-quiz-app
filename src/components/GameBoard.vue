@@ -29,6 +29,7 @@
     </h2>
 
     <div
+      :key="questionCount"
       v-if="question && question.answers.length && !isLoading"
       class="game-board__answers"
     >
@@ -43,6 +44,8 @@
         "
         :is-selected="selectedOption === optionLabels[key]"
         @select-answer="selectAnswer(optionLabels[key], answer)"
+        class="animate__animated animate__slideInLeft option-button"
+        :style="`animation-delay: ${key}00ms`"
       />
     </div>
 
@@ -200,6 +203,11 @@ export default defineComponent({
     display: grid;
     grid-template-columns: 100%;
     row-gap: 25px;
+    overflow: hidden;
+
+    .option-button {
+      animation-duration: 400ms;
+    }
   }
 
   .base-button {
