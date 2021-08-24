@@ -111,7 +111,7 @@ export default defineComponent({
     const handleTryAgain = () => {
       score.value = 0;
       questionsCount.value = 0;
-      currentView.value = ViewsEnum.GameBoard;
+      currentView.value = ViewsEnum.ChooseGameTarget;
     };
 
     onMounted(() => {

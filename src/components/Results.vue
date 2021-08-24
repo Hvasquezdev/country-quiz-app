@@ -19,20 +19,6 @@
       <base-button outlined color="dark-blue" @click="$emit('on-try-again')"
         >Try Again</base-button
       >
-
-      <div class="results__actions__btn-wrapper">
-        <base-button color="negative" @click="$emit('on-back')">
-          Back
-        </base-button>
-
-        <base-button
-          class="back-btn"
-          color="dark-blue"
-          @click="$emit('on-choose-target')"
-        >
-          Choose new target
-        </base-button>
-      </div>
     </div>
   </div>
 </template>
@@ -55,7 +41,7 @@ export default defineComponent({
 
   emits: ['on-try-again', 'on-back', 'on-choose-target'],
 
-  setup(props, { emit }) {
+  setup(props) {
     const classNames = computed(() => {
       return {
         'results__score__text__count--is-zero': Number(props.score) === 0,
@@ -90,10 +76,12 @@ export default defineComponent({
     &__title {
       font-size: $fs-xl;
       font-weight: $fw-bold;
+      color: $dark-blue;
     }
 
     &__text {
       font-size: $fs-s;
+      color: $dark-blue;
 
       &__count {
         font-size: $fs-l;
@@ -109,21 +97,7 @@ export default defineComponent({
 
   &__actions {
     width: 100%;
-
-    &__btn-wrapper {
-      display: flex;
-      width: 100%;
-      margin-top: 16px;
-
-      .base-button {
-        font-size: $fs-ss;
-        padding: 5px 16px;
-
-        &:last-child {
-          margin-left: 16px;
-        }
-      }
-    }
+    max-width: 209px;
 
     .base-button {
       width: 100%;

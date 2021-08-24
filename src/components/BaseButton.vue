@@ -22,6 +22,11 @@ export default defineComponent({
       type: String,
       default: '',
     },
+
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   setup(props, { emit }) {
@@ -31,6 +36,7 @@ export default defineComponent({
         [`base-button--is-outlined`]: props.outlined,
         [`base-button--is-${props.color}-outlined`]:
           props.outlined && props.color,
+        'base-button--is-disabled': props.disabled,
       };
     });
 
@@ -54,6 +60,8 @@ export default defineComponent({
   outline: none;
   padding: 5px 36px;
   min-height: 56px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
   transition: all 0.25s;
 
   &:active {
@@ -131,6 +139,7 @@ export default defineComponent({
   &--is-orange {
     color: $white;
     background-color: $orange;
+    box-shadow: 0px 2px 4px 0px #fca82f66;
 
     &:hover {
       background-color: darken($color: $orange, $amount: 10%);
@@ -148,6 +157,14 @@ export default defineComponent({
   &--is-outlined {
     border-color: currentColor;
     background-color: transparent;
+  }
+
+  &--is-disabled {
+    background-color: rgba(0, 0, 0, 0.12) !important;
+    pointer-events: none !important;
+    color: rgba(0, 0, 0, 0.26) !important;
+    box-shadow: none !important;
+    user-select: none;
   }
 }
 </style>

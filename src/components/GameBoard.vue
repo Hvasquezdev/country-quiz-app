@@ -43,6 +43,7 @@
 
     <base-button
       v-if="needConfirm"
+      :disabled="!selectedOption"
       class="confirm-button"
       label="Confirm"
       color="positive"
@@ -53,6 +54,7 @@
       v-else
       label="Next"
       color="orange"
+      class="is-next"
       @click="handleNextQuestion"
     />
   </div>
@@ -163,7 +165,7 @@ export default defineComponent({
     font-weight: $fw-bold;
     line-height: 36px;
     text-align: left;
-    color: $dark-blue;
+    color: $dark-blue-secondary;
     margin-bottom: 32px;
   }
 
@@ -177,10 +179,6 @@ export default defineComponent({
     margin-top: 24px;
     margin-left: auto;
     display: block;
-  }
-
-  .confirm-button {
-    width: 100%;
   }
 }
 </style>
