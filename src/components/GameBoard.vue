@@ -40,22 +40,49 @@
       />
     </div>
 
-    <base-button
-      v-if="needConfirm"
-      :disabled="!selectedOption"
-      class="confirm-button"
-      label="Confirm"
-      color="positive"
-      @click="handleConfirmOption"
-    />
+    <div class="game-board__actions">
+      <span class="game-board-lifes-count">
+        <b>5</b>
+        <svg
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          width="24"
+          height="24"
+          viewBox="0 0 391.837 391.837"
+          style="enable-background: new 0 0 391.837 391.837"
+          xml:space="preserve"
+        >
+          <g>
+            <path
+              style="fill: #d7443e"
+              d="M285.257,35.528c58.743,0.286,106.294,47.836,106.58,106.58
+		c0,107.624-195.918,214.204-195.918,214.204S0,248.165,0,142.108c0-58.862,47.717-106.58,106.58-106.58l0,0
+		c36.032-0.281,69.718,17.842,89.339,48.065C215.674,53.517,249.273,35.441,285.257,35.528z"
+            />
+          </g>
+        </svg>
+      </span>
 
-    <base-button
-      v-else
-      label="Next"
-      color="orange"
-      class="is-next"
-      @click="handleNextQuestion"
-    />
+      <base-button
+        v-if="needConfirm"
+        :disabled="!selectedOption"
+        class="confirm-button"
+        label="Confirm"
+        color="positive"
+        @click="handleConfirmOption"
+      />
+
+      <base-button
+        v-else
+        label="Next"
+        color="orange"
+        class="is-next"
+        @click="handleNextQuestion"
+      />
+    </div>
   </div>
 </template>
 
@@ -198,6 +225,24 @@ export default defineComponent({
 
     .option-button {
       animation-duration: 400ms;
+    }
+  }
+
+  &__actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .game-board-lifes-count {
+      display: flex;
+      align-items: center;
+      margin-top: 24px;
+
+      b {
+        font-size: $fs-m;
+        color: rgba(0, 0, 0, 0.3);
+        margin-right: 12px;
+      }
     }
   }
 
