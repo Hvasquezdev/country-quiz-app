@@ -50,7 +50,7 @@ export default defineComponent({
   cursor: pointer;
   font-family: $ff-popins;
   font-size: $fs-s;
-  font-weight: $fw-medium;
+  font-weight: $fw-bold;
   outline: none;
   padding: 5px 36px;
   min-height: 56px;

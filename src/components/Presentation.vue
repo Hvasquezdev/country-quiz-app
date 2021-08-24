@@ -23,7 +23,10 @@ import BaseButton from './BaseButton.vue';
 
 export default defineComponent({
   name: ViewsEnum.Presentation,
+
   components: { BaseButton },
+
+  emits: ['on-play'],
 });
 </script>
 
@@ -39,6 +42,7 @@ export default defineComponent({
     font-weight: $fw-bold;
     width: 100%;
     padding-left: 36px;
+    color: $dark-blue;
 
     &--is-right {
       text-align: right;
