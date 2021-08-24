@@ -54,10 +54,20 @@ const shuffleArray = (arr: Array<string | number>): Array<string | number> => {
   return arrToShuffle;
 };
 
+async function delay(delayTime: number): Promise<void> {
+  return new Promise((resolve) => {
+    const timeout = setTimeout(() => {
+      resolve();
+      clearTimeout(timeout);
+    }, delayTime);
+  });
+}
+
 export {
   getFirstLetterUpperCase,
   getParsedStringName,
   shuffleArray,
   suffleArrayOfObjects,
   getRandomIndexes,
+  delay,
 };

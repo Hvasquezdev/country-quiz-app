@@ -1,15 +1,6 @@
 <template>
   <div class="game-board">
     <img
-      src="@/assets/img/svg/undraw_adventure_4hum_1.svg"
-      alt="World sphere"
-      class="game-board__top-image"
-      width="162"
-      height="116"
-      load="lazy"
-    />
-
-    <img
       v-if="question && question.image && !isLoading"
       :src="question.image"
       :alt="question.label"
@@ -163,6 +154,7 @@ export default defineComponent({
 .game-board {
   position: relative;
   padding-top: 36px;
+  overflow: hidden;
 
   &__top-image {
     position: absolute;
@@ -203,7 +195,6 @@ export default defineComponent({
     display: grid;
     grid-template-columns: 100%;
     row-gap: 25px;
-    overflow: hidden;
 
     .option-button {
       animation-duration: 400ms;

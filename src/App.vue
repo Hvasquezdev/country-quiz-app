@@ -8,7 +8,19 @@
         Country quiz
       </h1>
 
-      <div class="game-wrapper__card">
+      <div
+        :class="gameWrapperClassNames"
+        class="animate__animated game-wrapper__card"
+      >
+        <img
+          src="@/assets/img/svg/undraw_adventure_4hum_1.svg"
+          alt="World sphere"
+          class="game-wrapper__card__top-image"
+          width="162"
+          height="116"
+          load="lazy"
+          v-if="currentView === ViewsEnum.GameBoard"
+        />
         <presentation
           v-if="currentView === ViewsEnum.Presentation"
           @on-play="currentView = ViewsEnum.ChooseGameTarget"
@@ -55,13 +67,14 @@
 <script lang="ts">
 import { Answer } from './core/domain/models/Answer';
 import { countriesDataManager } from '@/features/countriesDataManager';
-import { defineComponent, onMounted, watch, ref } from 'vue';
+import { defineComponent, onMounted, watch, ref, computed } from 'vue';
 import { questionManager } from '@/features/questionManager';
 import { ViewsEnum, viewTypes } from './core/constants/views';
 import ChooseGameTarget from './components/ChooseGameTarget.vue';
 import GameBoard from '@/components/GameBoard.vue';
 import Presentation from './components/Presentation.vue';
 import Results from './components/Results.vue';
+import { delay } from './core/utils';
 
 export default defineComponent({
   name: 'App',
@@ -78,6 +91,7 @@ export default defineComponent({
     const target = ref<number>(0);
     const questionsCount = ref<number>(0);
     const currentView = ref<viewTypes>(ViewsEnum.Presentation);
+    const shouldShake = ref<boolean>(false);
 
     const { loadingData, countriesData, getCountriesData } =
       countriesDataManager();
@@ -97,6 +111,7 @@ export default defineComponent({
 
     const handleConfirmAnswer = (payload: Answer) => {
       if (payload.isCorrect) score.value += 1;
+      else handleGameWrapperShake();
     };
 
     const handleChooseTarget = (val: number) => {
@@ -116,6 +131,18 @@ export default defineComponent({
       currentView.value = ViewsEnum.ChooseGameTarget;
     };
 
+    const gameWrapperClassNames = computed(() => {
+      return {
+        animate__shakeX: shouldShake.value,
+      };
+    });
+
+    const handleGameWrapperShake = async () => {
+      shouldShake.value = true;
+      await delay(500);
+      shouldShake.value = false;
+    };
+
     onMounted(() => {
       getCountriesData();
     });
@@ -129,17 +156,18 @@ export default defineComponent({
     return {
       creatingQuestion,
       currentView,
+      gameWrapperClassNames,
       handleChooseTarget,
       handleConfirmAnswer,
       handleNextQuestion,
       handleTryAgain,
       loadingData,
       question,
+      questionsCount,
       resetState,
       score,
-      ViewsEnum,
-      questionsCount,
       target,
+      ViewsEnum,
     };
   },
 });
@@ -180,6 +208,18 @@ export default defineComponent({
       padding: 32px;
       border-radius: $border-radius;
       background-color: $white;
+      animation-duration: 600ms;
+      position: relative;
+
+      &__top-image {
+        position: absolute;
+        right: -32px;
+        top: -80px;
+
+        @media screen and (max-width: 640px) {
+          display: none;
+        }
+      }
     }
   }
 }
