@@ -42,7 +42,7 @@
 
     <div class="game-board__actions">
       <span class="game-board-lifes-count">
-        <b>5</b>
+        <b>{{ lifesCount }}</b>
         <svg
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
@@ -93,6 +93,7 @@ import { Question } from '@/core/domain/models/Question';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseGameButton from '@/components/BaseGameButton.vue';
 import { ViewsEnum } from '@/core/constants/views';
+import { gameConfig } from '@/core/constants/gameConfig';
 
 export default defineComponent({
   name: ViewsEnum.GameBoard,
@@ -121,6 +122,11 @@ export default defineComponent({
     questionCountTarget: {
       type: Number,
       default: 0,
+    },
+
+    lifesCount: {
+      type: Number,
+      default: gameConfig.lifes,
     },
   },
 

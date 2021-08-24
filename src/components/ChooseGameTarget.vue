@@ -4,7 +4,7 @@
 
     <div class="choose-game-target__actions">
       <base-button
-        v-for="val in targets"
+        v-for="val in questionTargets"
         :key="val"
         color="dark-blue"
         outlined
@@ -27,8 +27,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import BaseButton from './BaseButton.vue';
+import { gameConfig } from '@/core/constants/gameConfig';
 import { ViewsEnum } from '@/core/constants/views';
+import BaseButton from './BaseButton.vue';
 
 export default defineComponent({
   name: ViewsEnum.ChooseGameTarget,
@@ -38,15 +39,15 @@ export default defineComponent({
   emits: ['on-choose', 'on-back'],
 
   setup(props, { emit }) {
-    const targets = [10, 20, 40];
-
     const onChooseTarget = (target: number) => {
       emit('on-choose', target);
     };
 
+    const { questionTargets } = gameConfig;
+
     return {
       onChooseTarget,
-      targets,
+      questionTargets,
     };
   },
 });

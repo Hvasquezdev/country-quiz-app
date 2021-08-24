@@ -32,32 +32,21 @@
           @on-choose="handleChooseTarget"
         />
 
+        <results
+          v-if="currentView === ViewsEnum.Results"
+          :score="score"
+          @on-try-again="handleTryAgain"
+        />
+
         <game-board
           v-if="currentView === ViewsEnum.GameBoard"
           :question="question"
           :question-count="questionsCount"
           :question-count-target="target"
           :is-loading="loadingData || creatingQuestion"
+          :lifes-count="lifesCount"
           @on-next="handleNextQuestion"
           @on-confirm="handleConfirmAnswer"
-        />
-
-        <results
-          v-if="currentView === ViewsEnum.Results"
-          :score="score"
-          @on-try-again="handleTryAgain"
-          @on-choose-target="
-            () => {
-              resetState();
-              currentView = ViewsEnum.ChooseGameTarget;
-            }
-          "
-          @on-back="
-            () => {
-              resetState();
-              currentView = ViewsEnum.Presentation;
-            }
-          "
         />
       </div>
     </div>
@@ -68,13 +57,14 @@
 import { Answer } from './core/domain/models/Answer';
 import { countriesDataManager } from '@/features/countriesDataManager';
 import { defineComponent, onMounted, watch, ref, computed } from 'vue';
+import { delay } from './core/utils';
 import { questionManager } from '@/features/questionManager';
 import { ViewsEnum, viewTypes } from './core/constants/views';
 import ChooseGameTarget from './components/ChooseGameTarget.vue';
 import GameBoard from '@/components/GameBoard.vue';
 import Presentation from './components/Presentation.vue';
 import Results from './components/Results.vue';
-import { delay } from './core/utils';
+import { gameConfig } from '@/core/constants/gameConfig';
 
 export default defineComponent({
   name: 'App',
@@ -92,6 +82,7 @@ export default defineComponent({
     const questionsCount = ref<number>(0);
     const currentView = ref<viewTypes>(ViewsEnum.Presentation);
     const shouldShake = ref<boolean>(false);
+    const lifesCount = ref<number>(gameConfig.lifes);
 
     const { loadingData, countriesData, getCountriesData } =
       countriesDataManager();
@@ -100,7 +91,7 @@ export default defineComponent({
       questionManager();
 
     const handleNextQuestion = () => {
-      if (questionsCount.value === target.value) {
+      if (questionsCount.value === target.value || lifesCount.value === 0) {
         currentView.value = ViewsEnum.Results;
         return;
       }
@@ -111,7 +102,10 @@ export default defineComponent({
 
     const handleConfirmAnswer = (payload: Answer) => {
       if (payload.isCorrect) score.value += 1;
-      else handleGameWrapperShake();
+      else {
+        handleGameWrapperShake();
+        lifesCount.value -= 1;
+      }
     };
 
     const handleChooseTarget = (val: number) => {
@@ -120,14 +114,14 @@ export default defineComponent({
     };
 
     const resetState = () => {
-      score.value = 0;
+      lifesCount.value = gameConfig.lifes;
       questionsCount.value = 0;
+      score.value = 0;
       target.value = 0;
     };
 
     const handleTryAgain = () => {
-      score.value = 0;
-      questionsCount.value = 0;
+      resetState();
       currentView.value = ViewsEnum.ChooseGameTarget;
     };
 
@@ -161,6 +155,7 @@ export default defineComponent({
       handleConfirmAnswer,
       handleNextQuestion,
       handleTryAgain,
+      lifesCount,
       loadingData,
       question,
       questionsCount,
