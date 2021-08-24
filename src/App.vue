@@ -23,6 +23,8 @@
         <game-board
           v-if="currentView === ViewsEnum.GameBoard"
           :question="question"
+          :question-count="questionsCount"
+          :question-count-target="target"
           :is-loading="loadingData || creatingQuestion"
           @on-next="handleNextQuestion"
           @on-confirm="handleConfirmAnswer"
@@ -98,7 +100,7 @@ export default defineComponent({
     };
 
     const handleChooseTarget = (val: number) => {
-      target.value = val;
+      target.value = val - 1;
       currentView.value = ViewsEnum.GameBoard;
     };
 
@@ -136,6 +138,8 @@ export default defineComponent({
       resetState,
       score,
       ViewsEnum,
+      questionsCount,
+      target,
     };
   },
 });

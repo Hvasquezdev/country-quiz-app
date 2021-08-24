@@ -19,6 +19,11 @@
       load="lazy"
     />
 
+    <span class="game-board__question-count">
+      Question <b>{{ questionCount + 1 }}</b> of
+      <b>{{ questionCountTarget + 1 }}</b>
+    </span>
+
     <h2 v-if="!isLoading && question" class="game-board__title">
       {{ question.label }}
     </h2>
@@ -86,6 +91,16 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+
+    questionCount: {
+      type: Number,
+      default: 0,
+    },
+
+    questionCountTarget: {
+      type: Number,
+      default: 0,
+    },
   },
 
   emits: ['select-option', 'on-confirm', 'on-next'],
@@ -150,6 +165,18 @@ export default defineComponent({
     position: absolute;
     right: -32px;
     top: -110px;
+  }
+
+  &__question-count {
+    font-size: $fs-s;
+    color: $dark-blue;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    b {
+      color: $dark-blue-secondary;
+    }
   }
 
   &__question-image {
