@@ -20,8 +20,8 @@
     </h2>
 
     <div
-      :key="questionCount"
       v-if="question && question.answers.length && !isLoading"
+      :key="questionCount"
       class="game-board__answers"
     >
       <base-game-button
@@ -34,9 +34,9 @@
           (answer.isCorrect && !needConfirm)
         "
         :is-selected="selectedOption === optionLabels[key]"
-        @select-answer="selectAnswer(optionLabels[key], answer)"
         class="animate__animated animate__slideInLeft option-button"
         :style="`animation-delay: ${key}00ms`"
+        @select-answer="selectAnswer(optionLabels[key], answer)"
       />
     </div>
 
@@ -57,7 +57,7 @@
         >
           <g>
             <path
-              style="fill: #d7443e"
+              style="fill: #ff2442"
               d="M285.257,35.528c58.743,0.286,106.294,47.836,106.58,106.58
 		c0,107.624-195.918,214.204-195.918,214.204S0,248.165,0,142.108c0-58.862,47.717-106.58,106.58-106.58l0,0
 		c36.032-0.281,69.718,17.842,89.339,48.065C215.674,53.517,249.273,35.441,285.257,35.528z"
@@ -263,6 +263,10 @@ export default defineComponent({
         font-size: $fs-m;
         color: rgba(0, 0, 0, 0.3);
         margin-right: 12px;
+      }
+
+      svg {
+        filter: drop-shadow(0 0 1px #ff304c);
       }
     }
   }

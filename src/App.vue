@@ -13,13 +13,13 @@
         class="animate__animated game-wrapper__card"
       >
         <img
+          v-if="currentView === ViewsEnum.GameBoard"
           src="@/assets/img/svg/undraw_adventure_4hum_1.svg"
           alt="World sphere"
           class="game-wrapper__card__top-image"
           width="162"
           height="116"
           load="lazy"
-          v-if="currentView === ViewsEnum.GameBoard"
         />
         <presentation
           v-if="currentView === ViewsEnum.Presentation"
@@ -50,6 +50,23 @@
         />
       </div>
     </div>
+
+    <div v-else-if="!loadingData && hasError" class="game-wrapper">
+      <div class="game-wrapper__card">
+        <h2 class="game-wrapper__card__error-title">
+          Error white fetching game data
+        </h2>
+
+        <base-button
+          class="game-wrapper__card__try-again-btn"
+          outlined
+          color="dark-blue"
+          @click="getCountriesData"
+          >Try Again</base-button
+        >
+      </div>
+    </div>
+
     <loading-game v-else />
   </div>
 </template>
@@ -67,6 +84,7 @@ import GameBoard from '@/components/GameBoard.vue';
 import LoadingGame from './components/LoadingGame.vue';
 import Presentation from './components/Presentation.vue';
 import Results from './components/Results.vue';
+import BaseButton from './components/BaseButton.vue';
 
 export default defineComponent({
   name: 'App',
@@ -77,6 +95,7 @@ export default defineComponent({
     ChooseGameTarget,
     Results,
     LoadingGame,
+    BaseButton,
   },
 
   setup() {
@@ -87,7 +106,7 @@ export default defineComponent({
     const shouldShake = ref<boolean>(false);
     const lifesCount = ref<number>(gameConfig.lifes);
 
-    const { loadingData, countriesData, getCountriesData } =
+    const { loadingData, countriesData, getCountriesData, hasError } =
       countriesDataManager();
 
     const { creatingQuestion, question, initQuestionGeneration } =
@@ -167,6 +186,8 @@ export default defineComponent({
       score,
       target,
       ViewsEnum,
+      getCountriesData,
+      hasError,
     };
   },
 });
@@ -209,6 +230,22 @@ export default defineComponent({
       background-color: $white;
       animation-duration: 600ms;
       position: relative;
+
+      &__error-title {
+        font-family: $ff-popins;
+        font-size: $fs-m;
+        font-weight: $fw-bold;
+        line-height: 36px;
+        text-align: center;
+        color: $dark-blue-secondary;
+        margin-bottom: 32px;
+      }
+
+      &__try-again-btn {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
 
       &__top-image {
         position: absolute;
