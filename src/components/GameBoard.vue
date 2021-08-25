@@ -245,7 +245,8 @@ export default defineComponent({
     row-gap: 25px;
 
     .option-button {
-      animation-duration: 400ms;
+      transition: transform 0.3s !important;
+      animation-duration: 300ms;
     }
   }
 
