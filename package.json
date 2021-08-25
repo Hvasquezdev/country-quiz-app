@@ -5,12 +5,13 @@
     "serve": "vite preview",
     "build": "vue-tsc --noEmit && vite build",
     "dev": "vite",
+    "server": "http-server ./dist",
     "format": "prettier .  --write",
     "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore ."
   },
   "dependencies": {
     "animate.css": "^4.1.1",
-    "register-service-worker": "^1.7.1",
+    "http-server": "^13.0.1",
     "vue": "^3.0.5",
     "vue-router": "^4.0.11",
     "vuex": "^4.0.2"
@@ -32,7 +33,6 @@
     "sass": "^1.38.0",
     "typescript": "^4.3.2",
     "vite": "^2.4.4",
-    "vite-plugin-pwa": "^0.11.2",
     "vue-tsc": "^0.2.2"
   }
 }
