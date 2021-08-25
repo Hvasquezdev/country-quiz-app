@@ -68,6 +68,23 @@
     </div>
 
     <loading-game v-else />
+
+    <footer class="app__footer">
+      Made by
+      <a
+        href="https://github.com/Hvasquezdev"
+        rel="noopener noreferrer"
+        target="_blank"
+        >Hector Vasquez</a
+      >
+      and
+      <a
+        href="https://github.com/angeleraser"
+        rel="noopener noreferrer"
+        target="_blank"
+        >Angel Figuera</a
+      >
+    </footer>
   </div>
 </template>
 
@@ -196,6 +213,8 @@ export default defineComponent({
 
 <style lang="scss">
 .app {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   min-height: 100vh;
@@ -257,6 +276,20 @@ export default defineComponent({
           display: none;
         }
       }
+    }
+  }
+
+  &__footer {
+    color: $white;
+    font-family: $ff-popins;
+    font-size: $fs-s;
+    text-align: center;
+    margin-top: 48px;
+
+    a {
+      color: $orange;
+      text-decoration: none;
+      font-weight: $fw-bold;
     }
   }
 }
