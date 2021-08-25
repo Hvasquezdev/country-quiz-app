@@ -155,6 +155,7 @@ export default defineComponent({
 
     const handleGameWrapperShake = async () => {
       shouldShake.value = true;
+      window.navigator?.vibrate(200);
       await delay(500);
       shouldShake.value = false;
     };
