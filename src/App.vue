@@ -69,7 +69,7 @@
 
     <loading-game v-else />
 
-    <footer class="app__footer">
+    <footer v-show="!loadingData" class="app__footer">
       Made by
       <a
         href="https://github.com/Hvasquezdev"
