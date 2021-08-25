@@ -1,7 +1,13 @@
 <template>
   <div class="results">
     <div class="results_header">
-      <img src="@/assets/img/svg/undraw_winner.svg" alt="Winners" />
+      <img
+        src="@/assets/img/svg/undraw_winner.svg"
+        alt="Winners"
+        width="238"
+        height="139"
+        loading="lazy"
+      />
     </div>
 
     <div class="results__score animate__animated animate__bounce">

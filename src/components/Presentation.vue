@@ -3,7 +3,12 @@
     <div class="presentation__title-text">WELCOME TO</div>
 
     <div class="presentation__image">
-      <img src="@/assets/img/svg/undraw_adventure_4hum_1.svg" alt="Winners" />
+      <img
+        src="@/assets/img/svg/undraw_adventure_4hum_1.svg"
+        alt="Winners"
+        width="250"
+        height="179"
+      />
     </div>
 
     <div class="presentation__title-text presentation__title-text--is-right">

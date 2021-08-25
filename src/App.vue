@@ -19,7 +19,7 @@
           class="game-wrapper__card__top-image"
           width="162"
           height="116"
-          load="lazy"
+          loading="lazy"
         />
         <presentation
           v-if="currentView === ViewsEnum.Presentation"

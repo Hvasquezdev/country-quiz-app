@@ -7,7 +7,7 @@
       class="game-board__question-image"
       width="84"
       height="54"
-      load="lazy"
+      loading="lazy"
     />
 
     <span class="game-board__question-count">
