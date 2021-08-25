@@ -54,7 +54,7 @@
     <div v-else-if="!loadingData && hasError" class="game-wrapper">
       <div class="game-wrapper__card">
         <h2 class="game-wrapper__card__error-title">
-          Error white fetching game data
+          Error while fetching game data
         </h2>
 
         <base-button
