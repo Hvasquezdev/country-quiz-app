@@ -63,6 +63,44 @@ async function delay(delayTime: number): Promise<void> {
   });
 }
 
+function getBrowserName(): string {
+  if (
+    (navigator.userAgent.indexOf('Opera') ||
+      navigator.userAgent.indexOf('OPR')) != -1
+  ) {
+    return 'Opera';
+  }
+
+  if (navigator.userAgent.indexOf('Chrome') != -1) {
+    return 'Chrome';
+  }
+
+  if (navigator.userAgent.indexOf('Safari') != -1) {
+    return 'Safari';
+  }
+
+  if (navigator.userAgent.indexOf('Firefox') != -1) {
+    return 'Firefox';
+  }
+
+  if (navigator.userAgent.indexOf('MSIE') != -1) {
+    //IF IE > 10
+    return 'IE';
+  }
+
+  return 'unknown';
+}
+
+function isIOSSafari(): boolean {
+  const ua = window.navigator.userAgent;
+  const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+  const webkit = !!ua.match(/WebKit/i);
+
+  return Boolean(
+    (iOS && webkit && !ua.match(/CriOS/i)) || getBrowserName() === 'Safari'
+  );
+}
+
 export {
   getFirstLetterUpperCase,
   getParsedStringName,
@@ -70,4 +108,6 @@ export {
   suffleArrayOfObjects,
   getRandomIndexes,
   delay,
+  getBrowserName,
+  isIOSSafari,
 };

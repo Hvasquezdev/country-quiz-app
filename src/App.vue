@@ -75,7 +75,7 @@
 import { Answer } from './core/domain/models/Answer';
 import { countriesDataManager } from '@/features/countriesDataManager';
 import { defineComponent, onMounted, watch, ref, computed } from 'vue';
-import { delay } from './core/utils';
+import { delay, isIOSSafari } from './core/utils';
 import { gameConfig } from '@/core/constants/gameConfig';
 import { questionManager } from '@/features/questionManager';
 import { ViewsEnum, viewTypes } from './core/constants/views';
@@ -155,7 +155,7 @@ export default defineComponent({
 
     const handleGameWrapperShake = async () => {
       shouldShake.value = true;
-      window.navigator?.vibrate(200);
+      if (!isIOSSafari()) window.navigator?.vibrate(200);
       await delay(500);
       shouldShake.value = false;
     };
