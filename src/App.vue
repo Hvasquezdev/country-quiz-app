@@ -260,7 +260,7 @@ export default defineComponent({
     &__card {
       padding: 32px;
       border-radius: $border-radius;
-      background-color: red;
+      background-color: $white;
       animation-duration: 600ms;
       position: relative;
 
