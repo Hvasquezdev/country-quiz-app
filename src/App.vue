@@ -21,32 +21,21 @@
           height="116"
           loading="lazy"
         />
-        <presentation
-          v-if="currentView === ViewsEnum.Presentation"
-          @on-play="currentView = ViewsEnum.ChooseGameTarget"
-        />
 
-        <choose-game-target
-          v-if="currentView === ViewsEnum.ChooseGameTarget"
-          @on-back="currentView = ViewsEnum.Presentation"
-          @on-choose="handleChooseTarget"
-        />
-
-        <results
-          v-if="currentView === ViewsEnum.Results"
-          :score="score"
-          @on-try-again="handleTryAgain"
-        />
-
-        <game-board
-          v-if="currentView === ViewsEnum.GameBoard"
+        <component
+          :is="currentViewComponent"
           :question="question"
           :question-count="questionsCount"
           :question-count-target="target"
           :is-loading="loadingData || creatingQuestion"
           :lifes-count="lifesCount"
+          :score="score"
+          @on-play="currentView = ViewsEnum.ChooseGameTarget"
+          @on-back="currentView = ViewsEnum.Presentation"
+          @on-choose="handleChooseTarget"
           @on-next="handleNextQuestion"
           @on-confirm="handleConfirmAnswer"
+          @on-try-again="handleTryAgain"
         />
       </div>
     </div>
@@ -99,8 +88,8 @@ import { ViewsEnum, viewTypes } from './core/constants/views';
 import ChooseGameTarget from './components/ChooseGameTarget.vue';
 import GameBoard from '@/components/GameBoard.vue';
 import LoadingGame from './components/LoadingGame.vue';
-import Presentation from './components/Presentation.vue';
-import Results from './components/Results.vue';
+import GamePresentation from './components/GamePresentation.vue';
+import GameResults from './components/GameResults.vue';
 import BaseButton from './components/BaseButton.vue';
 
 export default defineComponent({
@@ -108,9 +97,9 @@ export default defineComponent({
 
   components: {
     GameBoard,
-    Presentation,
+    GamePresentation,
     ChooseGameTarget,
-    Results,
+    GameResults,
     LoadingGame,
     BaseButton,
   },
@@ -128,6 +117,29 @@ export default defineComponent({
 
     const { creatingQuestion, question, initQuestionGeneration } =
       questionManager();
+
+    const currentViewComponent = computed(() => {
+      if (loadingData.value) {
+        return 'loading-game';
+      }
+
+      switch (currentView.value) {
+        case ViewsEnum.Presentation:
+          return 'game-presentation';
+
+        case ViewsEnum.ChooseGameTarget:
+          return 'choose-game-target';
+
+        case ViewsEnum.GameBoard:
+          return 'game-board';
+
+        case ViewsEnum.Results:
+          return 'game-results';
+
+        default:
+          return 'game-presentation';
+      }
+    });
 
     const handleNextQuestion = () => {
       if (questionsCount.value === target.value || lifesCount.value === 0) {
@@ -206,6 +218,7 @@ export default defineComponent({
       ViewsEnum,
       getCountriesData,
       hasError,
+      currentViewComponent,
     };
   },
 });
