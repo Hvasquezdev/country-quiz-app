@@ -20,9 +20,7 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "src/**/*.js",
-    "public/js/**",
-    "public/sw.js"
+    "src/**/*.js"
   ],
   "exclude": ["node_modules"]
 }
