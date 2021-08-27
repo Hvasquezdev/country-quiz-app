@@ -3,15 +3,15 @@ import { Answer } from '@/core/domain/models/Answer';
 import { CountriesData } from '@/core/domain/models/CountriesData';
 import { Country } from '@/core/domain/models/Country';
 import { Question } from '@/core/domain/models/Question';
-import { QuestionType } from '@/core/domain/models/QuestionType';
+import { QuestionType, QuestionTypes } from '@/core/domain/models/QuestionType';
 import { Region } from '@/core/domain/models/Region';
 import { Regions } from '@/core/domain/models/Regions';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
-import { getParsedStringName, suffleArrayOfObjects } from '@/core/utils';
+import { getParsedStringName, shuffleArrayOfObjects } from '@/core/utils';
 import { getRandomCountry } from '@/core/utils/countryUtils';
 
 export default class QuestionTypeCountryRegion implements QuestionInstance {
-  private _questionType: QuestionType = 'country-region';
+  private _questionType: QuestionType = QuestionTypes.COUNTRY_REGION;
 
   private getRandomRegion = (regions: Regions): Region => {
     const regionKeys = Object.keys(regions);
@@ -61,7 +61,7 @@ export default class QuestionTypeCountryRegion implements QuestionInstance {
       regions,
       getParsedStringName(mainCountry.region)
     );
-    const answers = suffleArrayOfObjects([correctAnswer, ...wrongAnswers]);
+    const answers = shuffleArrayOfObjects([correctAnswer, ...wrongAnswers]);
 
     return answers as Array<Answer>;
   };

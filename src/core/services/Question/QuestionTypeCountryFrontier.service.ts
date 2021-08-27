@@ -1,20 +1,17 @@
-import { questionLabels } from '@/core/constants/questionLabels';
-import { questionsCount } from '@/core/constants/questionsCount';
 import { Answer } from '@/core/domain/models/Answer';
 import { Countries } from '@/core/domain/models/Countries';
 import { CountriesData } from '@/core/domain/models/CountriesData';
-import { GenericObject } from '@/core/domain/models/GenericObject';
+import { getRandomCountry } from '@/core/utils/countryUtils';
+import { getRandomCountryWithBorders } from '@/core/utils/countryUtils';
 import { Question } from '@/core/domain/models/Question';
-import { QuestionType } from '@/core/domain/models/QuestionType';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
-import { suffleArrayOfObjects } from '@/core/utils';
-import {
-  getRandomCountry,
-  getRandomCountryWithBorders,
-} from '@/core/utils/countryUtils';
+import { questionLabels } from '@/core/constants/questionLabels';
+import { questionsCount } from '@/core/constants/questionsCount';
+import { QuestionType, QuestionTypes } from '@/core/domain/models/QuestionType';
+import { shuffleArrayOfObjects } from '@/core/utils';
 
 export default class QuestionTypeCountryFrontier implements QuestionInstance {
-  private _questionType: QuestionType = 'country-frontier';
+  private _questionType: QuestionType = QuestionTypes.COUNTRY_FRONTIER;
 
   private getRandomWrongAnswers = (
     countries: Countries,
@@ -66,13 +63,13 @@ export default class QuestionTypeCountryFrontier implements QuestionInstance {
     );
 
     return {
-      answers: suffleArrayOfObjects([
+      answers: shuffleArrayOfObjects([
         correctAnswer,
         ...wrongAnswers,
-      ] as Array<GenericObject>) as Array<Answer>,
+      ]) as Array<Answer>,
       image: '',
       label: `${correctCountry.name} ${questionLabels[this._questionType]}`,
-      type: this._questionType as QuestionType,
+      type: this._questionType,
     };
   };
 }

@@ -3,17 +3,17 @@ import { Question } from '@/core/domain/models/Question';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
 import { questionLabels } from '@/core/constants/questionLabels';
 import { questionsCount } from '@/core/constants/questionsCount';
-import { QuestionType } from '@/core/domain/models/QuestionType';
+import { QuestionType, QuestionTypes } from '@/core/domain/models/QuestionType';
 import {
   getAnswersWithCountryNameAsLabel,
   getRandomCountries,
 } from '@/core/utils/countryUtils';
-import { suffleArrayOfObjects } from '@/core/utils';
+import { shuffleArrayOfObjects } from '@/core/utils';
 import { Answer } from '@/core/domain/models/Answer';
 import { GenericObject } from '@/core/domain/models/GenericObject';
 
 export default class QuestionTypeFlagCountry implements QuestionInstance {
-  private _questionType: QuestionType = 'flag-country';
+  private _questionType: QuestionType = QuestionTypes.FLAG_COUNTRY;
 
   public getQuestion = (countriesData: CountriesData): Question => {
     const { countries } = countriesData;
@@ -28,12 +28,12 @@ export default class QuestionTypeFlagCountry implements QuestionInstance {
     );
 
     return {
-      answers: suffleArrayOfObjects(
+      answers: shuffleArrayOfObjects(
         answers as Array<GenericObject>
       ) as Array<Answer>,
       image: correctCountry.flag,
       label: questionLabels[this._questionType],
-      type: this._questionType as QuestionType,
+      type: this._questionType,
     };
   };
 }

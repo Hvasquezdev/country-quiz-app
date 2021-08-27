@@ -31,7 +31,7 @@ const getRandomIndexes = (quantity: number, limit: number): number[] => {
   return Object.values(indexes);
 };
 
-const suffleArrayOfObjects = (
+const shuffleArrayOfObjects = (
   arr: Array<GenericObject>
 ): Array<GenericObject> => {
   const stringifyList = arr.map((el: GenericObject) => JSON.stringify(el));
@@ -105,7 +105,7 @@ export {
   getFirstLetterUpperCase,
   getParsedStringName,
   shuffleArray,
-  suffleArrayOfObjects,
+  shuffleArrayOfObjects,
   getRandomIndexes,
   delay,
   getBrowserName,

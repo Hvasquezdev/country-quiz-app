@@ -35,6 +35,7 @@ const getParsedCountryData = (country: ApiCountry): Country => {
     name: country.name,
     region: country.region,
     subregion: country.subregion,
+    population: country.population,
   };
 };
 
@@ -115,6 +116,14 @@ const getAnswersWithCountryNameAsLabel = (
   });
 };
 
+const getSortedCountriesByPopulation = (
+  countries: Array<Country>
+): Country[] => {
+  return [...countries].sort(
+    (countryA, countryB) => countryB.population - countryA.population
+  );
+};
+
 export {
   getParsedCountryData,
   getParsedSubRegionData,
@@ -124,4 +133,5 @@ export {
   getAnswersWithCountryNameAsLabel,
   getRandomCountry,
   getRandomCountryWithBorders,
+  getSortedCountriesByPopulation,
 };

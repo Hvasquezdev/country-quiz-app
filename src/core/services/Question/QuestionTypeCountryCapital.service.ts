@@ -4,13 +4,13 @@ import { Countries } from '@/core/domain/models/Countries';
 import { CountriesData } from '@/core/domain/models/CountriesData';
 import { Country } from '@/core/domain/models/Country';
 import { Question } from '@/core/domain/models/Question';
-import { QuestionType } from '@/core/domain/models/QuestionType';
+import { QuestionType, QuestionTypes } from '@/core/domain/models/QuestionType';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
-import { suffleArrayOfObjects } from '@/core/utils';
+import { shuffleArrayOfObjects } from '@/core/utils';
 import { getRandomCountry } from '@/core/utils/countryUtils';
 
 export default class QuestionTypeCountryCapital implements QuestionInstance {
-  private _questionType: QuestionType = 'country-capital';
+  private _questionType: QuestionType = QuestionTypes.COUNTRY_CAPITAL;
 
   private getCorrectAnswer = (country: Country): Answer => {
     return {
@@ -49,7 +49,7 @@ export default class QuestionTypeCountryCapital implements QuestionInstance {
   ): Array<Answer> => {
     const correctAnswer = this.getCorrectAnswer(mainCountry);
     const wrongAnswers = this.getRandomWrongAnswers(countries, mainCountry.id);
-    const answers = suffleArrayOfObjects([correctAnswer, ...wrongAnswers]);
+    const answers = shuffleArrayOfObjects([correctAnswer, ...wrongAnswers]);
 
     return answers as Array<Answer>;
   };

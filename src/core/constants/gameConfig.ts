@@ -1,5 +1,5 @@
 const gameConfig = {
-  questionTargets: [10, 20, 40],
+  questionTargets: [10, 20, 30],
   lifes: 5,
 };
 

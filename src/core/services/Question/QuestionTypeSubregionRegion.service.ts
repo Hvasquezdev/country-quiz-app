@@ -2,16 +2,16 @@ import { questionLabels } from '@/core/constants/questionLabels';
 import { Answer } from '@/core/domain/models/Answer';
 import { CountriesData } from '@/core/domain/models/CountriesData';
 import { Question } from '@/core/domain/models/Question';
-import { QuestionType } from '@/core/domain/models/QuestionType';
+import { QuestionType, QuestionTypes } from '@/core/domain/models/QuestionType';
 import { Region } from '@/core/domain/models/Region';
 import { Regions } from '@/core/domain/models/Regions';
 import { SubRegion } from '@/core/domain/models/SubRegion';
 import { SubRegions } from '@/core/domain/models/SubRegions';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
-import { getParsedStringName, suffleArrayOfObjects } from '@/core/utils';
+import { getParsedStringName, shuffleArrayOfObjects } from '@/core/utils';
 
 export default class QuestionTypeSubregionRegion implements QuestionInstance {
-  private _questionType: QuestionType = 'subregion-region';
+  private _questionType: QuestionType = QuestionTypes.SUBREGION_REGION;
 
   private getRandomRegion = (regions: Regions): Region => {
     const regionKeys = Object.keys(regions);
@@ -71,7 +71,7 @@ export default class QuestionTypeSubregionRegion implements QuestionInstance {
       regions,
       getParsedStringName(mainRegion.name)
     );
-    const answers = suffleArrayOfObjects([correctAnswer, ...wrongAnswers]);
+    const answers = shuffleArrayOfObjects([correctAnswer, ...wrongAnswers]);
 
     return answers as Array<Answer>;
   };

@@ -1,4 +1,4 @@
-import { QuestionType } from '@/core/domain/models/QuestionType';
+import { QuestionType, QuestionTypes } from '@/core/domain/models/QuestionType';
 import { CountriesData } from '@/core/domain/models/CountriesData';
 import { QuestionService } from '@/core/domain/services/Question.service';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
@@ -10,29 +10,33 @@ import QuestionTypeCountryCapital from './QuestionTypeCountryCapital.service';
 import QuestionTypeCountryFrontier from './QuestionTypeCountryFrontier.service';
 import QuestionTypeCountryRegion from './QuestionTypeCountryRegion.service';
 import QuestionTypeSubregionRegion from './QuestionTypeSubregionRegion.service';
+import QuestionTypePopulationCountry from './QuestionTypePopulationCountry.service';
 
 export default class LocalQuestionService implements QuestionService {
   private getQuestionInstance = (
     questionType: QuestionType
   ): QuestionInstance => {
     switch (questionType) {
-      case 'flag-country':
+      case QuestionTypes.FLAG_COUNTRY:
         return new QuestionTypeFlagCountry();
 
-      case 'subregion-region':
+      case QuestionTypes.SUBREGION_REGION:
         return new QuestionTypeSubregionRegion();
 
-      case 'country-region':
+      case QuestionTypes.COUNTRY_REGION:
         return new QuestionTypeCountryRegion();
 
-      case 'country-capital':
+      case QuestionTypes.COUNTRY_CAPITAL:
         return new QuestionTypeCountryCapital();
 
-      case 'country-frontier':
+      case QuestionTypes.COUNTRY_FRONTIER:
         return new QuestionTypeCountryFrontier();
 
+      case QuestionTypes.POPULATION_COUNTRY:
+        return new QuestionTypePopulationCountry();
+
       default:
-        return {} as QuestionInstance;
+        return new QuestionTypeCountryCapital();
     }
   };
 
