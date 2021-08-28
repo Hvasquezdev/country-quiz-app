@@ -63,6 +63,7 @@ export default defineComponent({
   letter-spacing: 0.4px;
   text-transform: uppercase;
   transition: all 0.25s;
+  text-align: center;
 
   &:active {
     transform: scale(0.98);

@@ -225,22 +225,32 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.app {
-  display: flex;
-  flex-direction: column;
+html,
+body {
   width: 100%;
   height: 100%;
-  min-height: 100vh;
+}
+
+body {
   background-image: url('@/assets/img/png/background.png');
-  background-color: $purple;
+  background-color: $dark-purple;
   background-size: cover;
   background-position: center;
-  font-family: $ff-popins;
-  display: flex;
+  background-repeat: no-repeat;
+}
+
+.app {
   align-items: center;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  font-family: $ff-popins;
+  height: 100%;
   justify-content: center;
+  min-height: 100vh;
   min-width: 360px;
   padding: 32px;
+  width: 100%;
 
   .game-wrapper {
     width: 100%;

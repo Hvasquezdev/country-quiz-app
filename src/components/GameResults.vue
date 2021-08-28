@@ -78,6 +78,7 @@ export default defineComponent({
 
   &__score {
     margin: 72px 0;
+    text-align: center;
 
     &__title {
       font-size: $fs-xl;
