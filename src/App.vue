@@ -232,6 +232,7 @@ export default defineComponent({
   height: 100%;
   min-height: 100vh;
   background-image: url('@/assets/img/png/background.png');
+  background-color: $purple;
   background-size: cover;
   background-position: center;
   font-family: $ff-popins;
