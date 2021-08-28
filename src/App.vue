@@ -85,12 +85,12 @@ import { delay, isIOSSafari } from './core/utils';
 import { gameConfig } from '@/core/constants/gameConfig';
 import { questionManager } from '@/features/questionManager';
 import { ViewsEnum, viewTypes } from './core/constants/views';
+import BaseButton from './components/BaseButton.vue';
 import ChooseGameTarget from './components/ChooseGameTarget.vue';
 import GameBoard from '@/components/GameBoard.vue';
-import LoadingGame from './components/LoadingGame.vue';
 import GamePresentation from './components/GamePresentation.vue';
 import GameResults from './components/GameResults.vue';
-import BaseButton from './components/BaseButton.vue';
+import LoadingGame from './components/LoadingGame.vue';
 
 export default defineComponent({
   name: 'App',

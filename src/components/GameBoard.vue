@@ -38,6 +38,13 @@
         :style="`animation-delay: ${key}00ms`"
         @select-answer="selectAnswer(optionLabels[key], answer)"
       />
+
+      <game-timeout-bar
+        @on-timeout="handleTimeout"
+        :key="questionCount"
+        :duration="gameConfig.roundDuration"
+        :stop="stopInterval"
+      />
     </div>
 
     <div class="game-board__actions">
@@ -89,12 +96,14 @@
 <script lang="ts">
 import { Answer } from '@/core/domain/models/Answer';
 import { computed, defineComponent, ref } from 'vue';
+import { delay } from '@/core/utils';
+import { gameConfig } from '@/core/constants/gameConfig';
 import { Question } from '@/core/domain/models/Question';
+import { questionsCount } from '@/core/constants/questionsCount';
+import { ViewsEnum } from '@/core/constants/views';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseGameButton from '@/components/BaseGameButton.vue';
-import { ViewsEnum } from '@/core/constants/views';
-import { gameConfig } from '@/core/constants/gameConfig';
-import { delay } from '@/core/utils';
+import GameTimeoutBar from './GameTimeoutBar.vue';
 
 export default defineComponent({
   name: ViewsEnum.GameBoard,
@@ -102,6 +111,7 @@ export default defineComponent({
   components: {
     BaseGameButton,
     BaseButton,
+    GameTimeoutBar,
   },
 
   props: {
@@ -139,6 +149,7 @@ export default defineComponent({
     const selectedAnswer = ref<Answer | null>(null);
     const selectedOption = ref<null | string>(null);
     const heartFadeOut = ref<boolean>(false);
+    const stopInterval = ref<boolean>(false);
 
     const handleConfirmOption = () => {
       if (!selectedAnswer.value) return alert('Please, select a option!');
@@ -146,6 +157,8 @@ export default defineComponent({
       const { value: answer } = selectedAnswer;
 
       needConfirm.value = false;
+
+      stopInterval.value = true;
 
       emit('on-confirm', answer);
 
@@ -171,6 +184,7 @@ export default defineComponent({
       selectedAnswer.value = null;
       selectedOption.value = null;
       needConfirm.value = true;
+      stopInterval.value = false;
 
       emit('on-next');
     };
@@ -181,18 +195,32 @@ export default defineComponent({
       heartFadeOut.value = false;
     };
 
+    const handleRandomAnswerSelect = () => {
+      const randomIndex = Math.floor(Math.random() * questionsCount);
+      selectedOption.value = optionLabels.value[randomIndex];
+      selectedAnswer.value = props.question.answers[randomIndex];
+    };
+
+    const handleTimeout = () => {
+      if (!selectedOption.value) handleRandomAnswerSelect();
+      handleConfirmOption();
+    };
+
     const heartIconClassNames = computed(() => {
       return { animate__fadeOutDown: heartFadeOut.value };
     });
 
     return {
+      gameConfig,
+      handleConfirmOption,
+      handleNextQuestion,
+      handleTimeout,
+      heartIconClassNames,
+      needConfirm,
       optionLabels,
       selectAnswer,
       selectedOption,
-      handleConfirmOption,
-      needConfirm,
-      handleNextQuestion,
-      heartIconClassNames,
+      stopInterval,
     };
   },
 });
