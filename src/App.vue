@@ -248,7 +248,7 @@ body {
   height: 100%;
   justify-content: center;
   min-height: 100vh;
-  min-width: 360px;
+  min-width: 380px;
   padding: 32px;
   width: 100%;
 

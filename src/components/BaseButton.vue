@@ -1,5 +1,5 @@
 <template>
-  <button :class="classNames" class="base-button">
+  <button :class="classNames" class="base-button no-translate">
     <slot v-if="!Boolean(label)" /> {{ label }}
   </button>
 </template>
