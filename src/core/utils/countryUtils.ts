@@ -7,6 +7,7 @@ import { Regions } from '@/core/domain/models/Regions';
 import { SubRegion } from '@/core/domain/models/SubRegion';
 import { getParsedStringName, getRandomIndexes } from '@/core/utils';
 import { Answer } from '../domain/models/Answer';
+import { ApiCountryV3 } from '../domain/models/ApiCountryV3';
 
 const getRandomCountry = (countries: Countries): Country => {
   const countriesKey = Object.keys(countries);
@@ -20,7 +21,9 @@ const getRandomCountryWithBorders = (countries: Countries): Country => {
   const countriesWithBorder = Object.values(countries).filter(
     (country) => country.borders.length > 0
   );
+
   const randomKey = Math.floor(Math.random() * countriesWithBorder.length);
+
   const randomCountry = countries[countriesWithBorder[randomKey].id];
 
   return randomCountry;
@@ -39,14 +42,16 @@ const getParsedCountryData = (country: ApiCountry): Country => {
   };
 };
 
-const getParsedSubRegionData = (country: ApiCountry): SubRegion => {
+const getParsedSubRegionData = (
+  country: ApiCountry | ApiCountryV3
+): SubRegion => {
   return {
     id: getParsedStringName(country.subregion),
     name: country.subregion,
   };
 };
 
-const getParsedRegionData = (country: ApiCountry): Region => {
+const getParsedRegionData = (country: ApiCountry | ApiCountryV3): Region => {
   return {
     id: getParsedStringName(country.region),
     name: country.region,
