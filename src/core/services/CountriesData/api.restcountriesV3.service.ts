@@ -5,6 +5,7 @@ import { Regions } from '@/core/domain/models/Regions';
 import { ApiCountryV3 } from '@/core/domain/models/ApiCountryV3';
 import { Country } from '@/core/domain/models/Country';
 import {
+  getCountryQuestionTypes,
   getParsedRegionData,
   getParsedSubRegionData,
 } from '@/core/utils/countryUtils';
@@ -27,24 +28,12 @@ export default class ApiCountriesDataV3Service implements CountriesDataService {
     const countries = {} as Countries;
     const regions = {} as Regions;
 
-    const filteredList = countryList.filter(
-      ({ cca3, capital, region, subregion, borders }) => {
-        return (
-          cca3 &&
-          capital &&
-          capital.length &&
-          region &&
-          subregion &&
-          borders &&
-          borders.length
-        );
-      }
-    );
+    const filteredList = countryList.filter(({ cca3 }) => cca3);
 
     filteredList.forEach((country: ApiCountryV3) => {
       const countryID = country.cca3;
-      const regionParsedName = getParsedStringName(country.region);
-      const subRegionName = getParsedStringName(country.subregion);
+      const regionParsedName = getParsedStringName(country.region || '');
+      const subRegionName = getParsedStringName(country.subregion || '');
 
       if (regionParsedName && subRegionName) {
         if (!(countryID in countries)) {
@@ -68,14 +57,15 @@ export default class ApiCountriesDataV3Service implements CountriesDataService {
 
   private getParsedCountryData = (country: ApiCountryV3): Country => {
     return {
-      borders: country.borders,
-      capital: country.capital[0],
+      borders: country.borders || [],
+      capital: country.capital ? country.capital[0] : '',
       flag: (country.flags.svg || country.flags.png) as string,
-      id: country.cca3 || country.cca2,
+      id: country.cca3,
       name: country.name.common,
       population: country.population,
       region: country.region,
       subregion: country.subregion,
+      questions: getCountryQuestionTypes(country),
     };
   };
 }

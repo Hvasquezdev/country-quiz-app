@@ -8,6 +8,7 @@ import { SubRegion } from '@/core/domain/models/SubRegion';
 import { getParsedStringName, getRandomIndexes } from '@/core/utils';
 import { Answer } from '../domain/models/Answer';
 import { ApiCountryV3 } from '../domain/models/ApiCountryV3';
+import { QuestionType, QuestionTypes } from '../domain/models/QuestionType';
 
 const getRandomCountry = (countries: Countries): Country => {
   const countriesKey = Object.keys(countries);
@@ -129,6 +130,34 @@ const getSortedCountriesByPopulation = (
   );
 };
 
+const getCountryQuestionTypes = (
+  country: ApiCountry | ApiCountryV3
+): QuestionType[] => {
+  const types = {
+    [QuestionTypes.COUNTRY_CAPITAL]: !!country.capital,
+    [QuestionTypes.COUNTRY_FRONTIER]: !!country.borders,
+    [QuestionTypes.COUNTRY_REGION]: !!country.region,
+    [QuestionTypes.FLAG_COUNTRY]: Boolean(
+      country.flag ||
+        (country as ApiCountryV3).flags.png ||
+        (country as ApiCountryV3).flags.svg
+    ),
+    [QuestionTypes.POPULATION_COUNTRY]: Number.isInteger(country.population),
+  } as { [key in QuestionType]?: boolean };
+
+  return Object.entries(types)
+    .filter((item) => item[1])
+    .map((item) => item[0] as QuestionType);
+};
+
+const getRandomRegion = (regions: Regions): Region => {
+  const regionKeys = Object.keys(regions);
+  const randomKey = Math.floor(Math.random() * regionKeys.length);
+  const randomRegion = regions[regionKeys[randomKey]];
+
+  return randomRegion;
+};
+
 export {
   getParsedCountryData,
   getParsedSubRegionData,
@@ -139,4 +168,6 @@ export {
   getRandomCountry,
   getRandomCountryWithBorders,
   getSortedCountriesByPopulation,
+  getCountryQuestionTypes,
+  getRandomRegion,
 };
