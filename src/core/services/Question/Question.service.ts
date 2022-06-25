@@ -29,9 +29,6 @@ export default class LocalQuestionService implements QuestionService {
       case QuestionTypes.COUNTRY_CAPITAL:
         return new QuestionTypeCountryCapital();
 
-      case QuestionTypes.COUNTRY_FRONTIER:
-        return new QuestionTypeCountryFrontier();
-
       case QuestionTypes.POPULATION_COUNTRY:
         return new QuestionTypePopulationCountry();
 

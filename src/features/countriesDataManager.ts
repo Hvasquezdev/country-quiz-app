@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { CountriesData } from '@/core/domain/models/CountriesData';
-import ApiCountriesDataService from '@/core/services/CountriesData/api.CountriesData.service';
+import ApiCountriesDataService from '@/core/services/CountriesData/api.restcountriesV3.service';
 import { GenericObject } from '@/core/domain/models/GenericObject';
 
 export const countriesDataManager = (): GenericObject => {
