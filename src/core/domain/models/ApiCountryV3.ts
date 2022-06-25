@@ -13,6 +13,7 @@ interface ApiCountryV3 {
       };
     };
   };
+  borders: Array<string>;
   tld: Array<string>;
   cca2: string;
   ccn3: string;

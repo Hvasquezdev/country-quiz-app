@@ -27,28 +27,35 @@ export default class ApiCountriesDataV3Service implements CountriesDataService {
     const countries = {} as Countries;
     const regions = {} as Regions;
 
-    countryList.forEach((country: ApiCountryV3) => {
-      if (
-        country.capital &&
-        country.capital.length &&
-        country.region &&
-        country.subregion
-      ) {
-        const countryID = country.cioc || country.cca3 || country.cca2;
-        const regionParsedName = getParsedStringName(country.region);
-        const subRegionName = getParsedStringName(country.subregion);
+    const filteredList = countryList.filter(
+      ({ cca3, capital, region, subregion, borders }) => {
+        return (
+          cca3 &&
+          capital &&
+          capital.length &&
+          region &&
+          subregion &&
+          borders &&
+          borders.length
+        );
+      }
+    );
 
-        if (regionParsedName && subRegionName) {
-          if (!(countryID in countries)) {
-            countries[countryID] = this.getParsedCountryData(country);
-          }
+    filteredList.forEach((country: ApiCountryV3) => {
+      const countryID = country.cca3;
+      const regionParsedName = getParsedStringName(country.region);
+      const subRegionName = getParsedStringName(country.subregion);
 
-          if (!(regionParsedName in regions)) {
-            regions[regionParsedName] = getParsedRegionData(country);
-          } else {
-            regions[regionParsedName].subRegions[subRegionName] =
-              getParsedSubRegionData(country);
-          }
+      if (regionParsedName && subRegionName) {
+        if (!(countryID in countries)) {
+          countries[countryID] = this.getParsedCountryData(country);
+        }
+
+        if (!(regionParsedName in regions)) {
+          regions[regionParsedName] = getParsedRegionData(country);
+        } else {
+          regions[regionParsedName].subRegions[subRegionName] =
+            getParsedSubRegionData(country);
         }
       }
     });
@@ -61,10 +68,10 @@ export default class ApiCountriesDataV3Service implements CountriesDataService {
 
   private getParsedCountryData = (country: ApiCountryV3): Country => {
     return {
-      borders: [],
+      borders: country.borders,
       capital: country.capital[0],
       flag: (country.flags.svg || country.flags.png) as string,
-      id: country.cioc || country.cca3 || country.cca2,
+      id: country.cca3 || country.cca2,
       name: country.name.common,
       population: country.population,
       region: country.region,
