@@ -176,6 +176,7 @@ export default defineComponent({
       questionsCount.value = 0;
       score.value = 0;
       target.value = 0;
+      initQuestionGeneration(countriesData.value);
     };
 
     const handleTryAgain = () => {

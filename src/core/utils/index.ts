@@ -1,3 +1,4 @@
+import { Answer } from '../domain/models/Answer';
 import { GenericObject } from '../domain/models/GenericObject';
 
 const getFirstLetterUpperCase = (word: string): string => {
@@ -6,6 +7,9 @@ const getFirstLetterUpperCase = (word: string): string => {
 
 const getParsedStringName = (name: string): string => {
   const wordsArr = name.split(' ');
+
+  if (wordsArr.length === 1) return name.toLocaleLowerCase();
+
   const parsedName = wordsArr.map((word, index) => {
     if (index > 0) {
       return getFirstLetterUpperCase(word.toLocaleLowerCase());
@@ -31,9 +35,7 @@ const getRandomIndexes = (quantity: number, limit: number): number[] => {
   return Object.values(indexes);
 };
 
-const shuffleArrayOfObjects = (
-  arr: Array<GenericObject>
-): Array<GenericObject> => {
+const shuffleArrayOfObjects = <T>(arr: Array<GenericObject>): Array<T> => {
   const stringifyList = arr.map((el: GenericObject) => JSON.stringify(el));
   const shuffledArr = shuffleArray(stringifyList) as Array<string>;
 
@@ -52,6 +54,10 @@ const shuffleArray = (arr: Array<string | number>): Array<string | number> => {
   }
 
   return arrToShuffle;
+};
+
+const copyObject = <T>(obj: T): T => {
+  return JSON.parse(JSON.stringify(obj));
 };
 
 async function delay(delayTime: number): Promise<void> {
@@ -101,6 +107,17 @@ function isIOSSafari(): boolean {
   );
 }
 
+const getRandomIndex = (maxLength: number): number => {
+  return Math.floor(Math.random() * maxLength);
+};
+
+const getCorrectAnswer = (label: string): Answer => {
+  return {
+    label,
+    isCorrect: true,
+  };
+};
+
 export {
   getFirstLetterUpperCase,
   getParsedStringName,
@@ -110,4 +127,7 @@ export {
   delay,
   getBrowserName,
   isIOSSafari,
+  getRandomIndex,
+  copyObject,
+  getCorrectAnswer,
 };

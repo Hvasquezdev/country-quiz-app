@@ -1,3 +1,5 @@
+import { QuestionType } from './QuestionType';
+
 interface Country {
   borders: Array<string>;
   capital: string;
@@ -7,6 +9,7 @@ interface Country {
   region: string;
   subregion: string;
   population: number;
+  questions?: Array<QuestionType>;
 }
 
 export { Country };

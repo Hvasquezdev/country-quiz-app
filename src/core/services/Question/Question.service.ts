@@ -46,4 +46,10 @@ export default class LocalQuestionService implements QuestionService {
   ): Question => {
     return this.getQuestionInstance(questionType).getQuestion(countriesData);
   };
+
+  public getQuestionByCountry(): never {
+    throw new Error(
+      'This service does not support Question by country generation'
+    );
+  }
 }

@@ -17,7 +17,8 @@ export const countriesDataManager = (): GenericObject => {
       const response = await CountriesDataService.getData();
 
       countriesData.value = response;
-    } catch {
+    } catch (e) {
+      console.log(e);
       hasError.value = true;
     } finally {
       loadingData.value = false;

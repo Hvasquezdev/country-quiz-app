@@ -4,22 +4,13 @@ import { CountriesData } from '@/core/domain/models/CountriesData';
 import { Country } from '@/core/domain/models/Country';
 import { Question } from '@/core/domain/models/Question';
 import { QuestionType, QuestionTypes } from '@/core/domain/models/QuestionType';
-import { Region } from '@/core/domain/models/Region';
 import { Regions } from '@/core/domain/models/Regions';
 import { QuestionInstance } from '@/core/domain/services/QuestionInstance.service';
 import { getParsedStringName, shuffleArrayOfObjects } from '@/core/utils';
-import { getRandomCountry } from '@/core/utils/countryUtils';
+import { getRandomCountry, getRandomRegion } from '@/core/utils/countryUtils';
 
 export default class QuestionTypeCountryRegion implements QuestionInstance {
   private _questionType: QuestionType = QuestionTypes.COUNTRY_REGION;
-
-  private getRandomRegion = (regions: Regions): Region => {
-    const regionKeys = Object.keys(regions);
-    const randomKey = Math.floor(Math.random() * regionKeys.length);
-    const randomRegion = regions[regionKeys[randomKey]];
-
-    return randomRegion;
-  };
 
   private getCorrectAnswer = (country: Country): Answer => {
     return {
@@ -39,7 +30,7 @@ export default class QuestionTypeCountryRegion implements QuestionInstance {
     delete regionList[mainRegionId];
 
     for (let i = 0; i < 3; i++) {
-      const randomRegion = this.getRandomRegion(regionList);
+      const randomRegion = getRandomRegion(regionList);
 
       wrongAnswers.push({
         label: randomRegion.name,
