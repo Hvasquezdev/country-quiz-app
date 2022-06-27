@@ -28,16 +28,8 @@ export default class ApiCountriesDataV3Service implements CountriesDataService {
     const regions = {} as Regions;
 
     const filteredList = countryList.filter(
-      ({ cca3, capital, region, subregion, borders }) => {
-        return (
-          cca3 &&
-          capital &&
-          capital.length &&
-          region &&
-          subregion &&
-          borders &&
-          borders.length
-        );
+      ({ capital, subregion, borders }) => {
+        return capital && subregion && borders;
       }
     );
 
@@ -71,7 +63,7 @@ export default class ApiCountriesDataV3Service implements CountriesDataService {
       borders: country.borders,
       capital: country.capital[0],
       flag: (country.flags.svg || country.flags.png) as string,
-      id: country.cca3 || country.cca2,
+      id: country.cca3,
       name: country.name.common,
       population: country.population,
       region: country.region,

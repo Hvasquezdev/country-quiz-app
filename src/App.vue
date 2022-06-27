@@ -12,15 +12,20 @@
         :class="gameWrapperClassNames"
         class="animate__animated game-wrapper__card"
       >
-        <img
-          v-if="currentView === ViewsEnum.GameBoard"
-          src="@/assets/img/svg/undraw_adventure_4hum_1.svg"
-          alt="World sphere"
-          class="game-wrapper__card__top-image"
-          width="162"
-          height="116"
-          loading="lazy"
-        />
+        <template v-if="currentView === ViewsEnum.GameBoard">
+          <button class="game-wrapper__back-btn" @click="handleInGameBack">
+            <span class="material-icons"> arrow_back </span>
+          </button>
+
+          <img
+            src="@/assets/img/svg/undraw_adventure_4hum_1.svg"
+            alt="World sphere"
+            class="game-wrapper__card__top-image"
+            width="162"
+            height="116"
+            loading="lazy"
+          />
+        </template>
 
         <component
           :is="currentViewComponent"
@@ -64,15 +69,17 @@
         href="https://github.com/Hvasquezdev"
         rel="noopener noreferrer"
         target="_blank"
-        >Hector Vasquez</a
       >
+        Hector Vasquez
+      </a>
       and
       <a
         href="https://github.com/angeleraser"
         rel="noopener noreferrer"
         target="_blank"
-        >Angel Figuera</a
       >
+        Angel Figuera
+      </a>
     </footer>
   </div>
 </template>
@@ -176,6 +183,15 @@ export default defineComponent({
       currentView.value = ViewsEnum.ChooseGameTarget;
     };
 
+    const handleInGameBack = () => {
+      const isConfirmed = confirm('Are you sure you want to leave?');
+
+      if (isConfirmed) {
+        resetState();
+        currentView.value = ViewsEnum.ChooseGameTarget;
+      }
+    };
+
     const gameWrapperClassNames = computed(() => {
       return {
         animate__shakeX: shouldShake.value,
@@ -219,6 +235,7 @@ export default defineComponent({
       getCountriesData,
       hasError,
       currentViewComponent,
+      handleInGameBack,
     };
   },
 });
@@ -255,6 +272,23 @@ body {
   .game-wrapper {
     width: 100%;
     max-width: 468px;
+
+    &__back-btn {
+      outline: none;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      color: $dark-blue;
+      margin-bottom: 24px;
+
+      .material-icons {
+        font-size: 28px;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
 
     &__title {
       font-size: 36px;
