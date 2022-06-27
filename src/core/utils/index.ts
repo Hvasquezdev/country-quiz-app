@@ -7,6 +7,9 @@ const getFirstLetterUpperCase = (word: string): string => {
 
 const getParsedStringName = (name: string): string => {
   const wordsArr = name.split(' ');
+
+  if (wordsArr.length === 1) return name.toLocaleLowerCase();
+
   const parsedName = wordsArr.map((word, index) => {
     if (index > 0) {
       return getFirstLetterUpperCase(word.toLocaleLowerCase());
@@ -51,6 +54,10 @@ const shuffleArray = (arr: Array<string | number>): Array<string | number> => {
   }
 
   return arrToShuffle;
+};
+
+const copyObject = <T>(obj: T): T => {
+  return JSON.parse(JSON.stringify(obj));
 };
 
 async function delay(delayTime: number): Promise<void> {
@@ -121,5 +128,6 @@ export {
   getBrowserName,
   isIOSSafari,
   getRandomIndex,
+  copyObject,
   getCorrectAnswer,
 };

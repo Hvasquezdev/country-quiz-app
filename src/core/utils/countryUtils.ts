@@ -138,9 +138,9 @@ const getCountryQuestionTypes = (
     [QuestionTypes.COUNTRY_FRONTIER]: !!country.borders,
     [QuestionTypes.COUNTRY_REGION]: !!country.region,
     [QuestionTypes.FLAG_COUNTRY]: Boolean(
-      country.flag ||
-        (country as ApiCountryV3).flags.png ||
-        (country as ApiCountryV3).flags.svg
+      (country as ApiCountryV3).flags.png ||
+        (country as ApiCountryV3).flags.svg ||
+        country.flag
     ),
     [QuestionTypes.POPULATION_COUNTRY]: Number.isInteger(country.population),
   } as { [key in QuestionType]?: boolean };

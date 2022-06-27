@@ -2,6 +2,7 @@
   <div class="game-board">
     <img
       v-if="question && question.image && !isLoading"
+      :key="questionCount"
       :src="question.image"
       :alt="question.label"
       class="game-board__question-image"

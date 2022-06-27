@@ -28,13 +28,7 @@ export default class ApiCountriesDataV3Service implements CountriesDataService {
     const countries = {} as Countries;
     const regions = {} as Regions;
 
-    const filteredList = countryList.filter(
-      ({ capital, subregion, borders }) => {
-        return capital && subregion && borders;
-      }
-    );
-
-    filteredList.forEach((country: ApiCountryV3) => {
+    countryList.forEach((country: ApiCountryV3) => {
       const countryID = country.cca3;
       const regionParsedName = getParsedStringName(country.region || '');
       const subRegionName = getParsedStringName(country.subregion || '');

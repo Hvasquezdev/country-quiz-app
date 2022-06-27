@@ -1,32 +1,31 @@
 import { CountriesData } from '@/core/domain/models/CountriesData';
 import { GenericObject } from '@/core/domain/models/GenericObject';
 import { Question } from '@/core/domain/models/Question';
-import { QuestionType } from '@/core/domain/models/QuestionType';
 import { ref } from 'vue';
-import LocalQuestionService from '@/core/services/Question/Question.service';
-import { questionLabels } from '@/core/constants/questionLabels';
+import { QuestionServiceV2 } from '@/core/services/Question/QuestionV2.service';
+import { Country } from '@/core/domain/models/Country';
+import { getRandomCountry } from '@/core/utils/countryUtils';
 
 export const questionManager = (): GenericObject => {
-  const QuestionService = new LocalQuestionService();
+  const QuestionService = new QuestionServiceV2();
   const creatingQuestion = ref(false);
   const question = ref(null as Question | null);
 
   const createQuestion = (
-    questionType: QuestionType,
+    randomCountry: Country,
     countriesData: CountriesData
   ) => {
-    return QuestionService.getQuestionByType(questionType, countriesData);
-  };
-
-  const getRandomType = () => {
-    const questionTypes = Object.keys(questionLabels);
-    const randomIndex = Math.floor(Math.random() * questionTypes.length);
-    return questionTypes[randomIndex] as QuestionType;
+    return QuestionService.getQuestionByCountry(randomCountry, countriesData);
   };
 
   const initQuestionGeneration = (countriesData: CountriesData): void => {
     creatingQuestion.value = true;
-    question.value = createQuestion(getRandomType(), countriesData);
+
+    question.value = createQuestion(
+      getRandomCountry(countriesData.countries),
+      countriesData
+    );
+
     creatingQuestion.value = false;
   };
 
