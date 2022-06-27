@@ -40,10 +40,10 @@
       />
 
       <game-timeout-bar
-        @on-timeout="handleTimeout"
         :key="questionCount"
         :duration="gameConfig.roundDuration"
         :stop="stopInterval"
+        @on-timeout="handleTimeout"
       />
     </div>
 
